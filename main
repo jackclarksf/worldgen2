@@ -1,0 +1,13 @@
+from worlds import World
+from worlds import Forest
+from entities import City
+
+size = input("What is the size? X by X format, please!")
+
+
+class Game:
+    def __init__(self):
+        self.world = World(size, size)
+
+
+game_world = Game()
