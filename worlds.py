@@ -12,6 +12,8 @@ class World:
         self.terrain_list = [self.terrain_a, self.terrain_b]
         self.terrain_scatter()
         print(self.terrain_list)
+        print(self.return_dominant())
+        print(self.return_submissive())
 
 
 
@@ -26,6 +28,13 @@ class World:
         for i in base_coords:
             choice = random.randint(0, 1)
             self.terrain_list[choice].append(i)
+
+    def return_dominant(self):
+        return max(self.terrain_list, key=len)
+
+    def return_submissive(self):
+        return min(self.terrain_list, key=len)
+
 
 
 
