@@ -2,8 +2,8 @@ from worlds import World
 from worlds import Forest
 from entities import City
 
-choice_1 = "X"
-choice_2 = "'"
+land1 = "X"
+land2 = "'"
 size = int(input("What is the size? X by X format, please!"))
 
 
@@ -11,13 +11,13 @@ class Game:
     def __init__(self):
         self.world = World(size, size)
         self.bmap = [[" " for i in range(size)] for i in range(size)]
-        self.paint_map()
+        self.paint_map(land1, land2)
 
     def base_map(self):
         for i in self.bmap:
             print(i)
 
-    def paint_map(self):
+    def paint_map(self, choice_1, choice_2):
         dom_land = self.world.return_dominant()
         sub_land = self.world.return_submissive()
         print("Dom land: {}".format(dom_land))
