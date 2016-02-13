@@ -11,9 +11,11 @@ class World:
         self.terrain_b = []
         self.terrain_list = [self.terrain_a, self.terrain_b]
         self.terrain_scatter()
-        print("Test clump")
+        print(list(self.return_dominant()))
         self.terrain_clump()
         print("End test clump")
+
+
 
 
 
@@ -34,10 +36,24 @@ class World:
             self.terrain_list[choice].append(i)
 
     def terrain_clump(self):
-        min_list = list(self.return_submissive())
-        for i, j in enumerate(min_list):
-            print(i)
-            print(j)
+        max_list = list(self.return_dominant())
+        abs_gap = []
+        for i, j in enumerate(max_list):
+            if i == len(max_list)-1:
+                continue
+            else:
+                a, b = j
+                c, d = max_list[i+1]
+                holder_list = []
+                if a == c:
+                    temp = abs(b-d)
+                    abs_gap.append(temp)
+                    print("AB {} {} and CD {} {} is and gap is {}".format(a, b, c, d, temp))
+
+                #abs_gap.append(abs(b-d))
+                #i += 1
+        print(abs_gap)
+        #INSTEAD SHOULT WORK THIS OUT FOR EACH LINE THEN CONCATE LISTS
 
 
 
