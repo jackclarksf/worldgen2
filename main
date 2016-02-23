@@ -1,7 +1,7 @@
 from worlds import World
 from entities import City
 
-land1 = "X"
+land1 = "W"
 land2 = "'"
 size = int(input("What is the size? X by X format, please!"))
 
