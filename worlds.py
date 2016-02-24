@@ -37,7 +37,6 @@ class World:
             list_to_return = self.land_world(water)
             return list_to_return
 
-
     def water_world(self, w_level):
         water_list = []
         print("Creating an island world")
@@ -53,21 +52,37 @@ class World:
             elif b == self.x-1:
                 water_list.append(i)
         remaining_list = [x for x in our_coordinates if x not in water_list]
-        #print(remaining_list)
         extra_list = self.island_function(remaining_list)
         water_list = extra_list + water_list
         return water_list
 
     def island_function(self, island_list):
         additional_island_list = []
+        middle_point = abs(1 - self.x-1)
+        print("OK, we're checking numbers between {} and {} with midpoint {}".format(1, self.x-1, middle_point))
         for i in island_list:
             water_roll = random.randint(0, 10)
             a, b = i
             if a in range(1, self.x-1):
-                if water_roll > 5:
-                    additional_island_list.append(i)
-        #print("Our extra list is {}".format(additional_island_list))
+                self.island_smart_scatter(a, b, i, water_roll, additional_island_list)
+                #if water_roll > 5:
+                #    additional_island_list.append(i)
         return additional_island_list
+        #print("Our extra list is {}".format(additional_island_list))
+
+    #need to write a function that scatters water with more likelihood at edges than at center
+    #what is an edge? an edge is either 0 or self.x-1
+    #what is the center? abs 0 to self.x-1, divided by two
+
+    def island_smart_scatter(self, inputa, inputb, inputi, water_stat, add_list):
+        if inputa and inputb < 3:
+            if water_stat > 5:
+                add_list.append(inputi)
+        elif inputa and inputb > 5:
+            if water_stat > 5:
+                add_list.append(inputi)
+
+
 
 
     def land_world(self, w_level):
