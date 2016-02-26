@@ -5,6 +5,15 @@ __author__ = 'iamja_000'
 from itertools import product, starmap
 import random
 
+roota = 4
+rootb = 3
+a = roota, rootb
+coord = []
+coord.append(a)
+print(coord)
+coord.append(product(roota-1, rootb-1))
+print(coord)
+
 class World:
     def __init__(self, x, y):
         self.x = int(x)
