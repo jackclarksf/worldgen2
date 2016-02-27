@@ -66,18 +66,17 @@ class World:
             count += 1
         print("Coordinates: {}".format(coordinates_to_check))
         for i in coordinates_to_check:
-            print(i)
             a, b = i
             self.space_creator(a, b, check_list)
 
 #some really weird shit is happening here
 
     def space_creator(self, coordinate_a, coordinate_b, list_of_entities):
-        print("Checking {} {}".format(coordinate_a, coordinate_a))
+        #print("Checking {} {}".format(coordinate_a, coordinate_b))
         nearby = self.get_neighbours(coordinate_a, coordinate_b)
         for i in nearby:
             if i in list_of_entities:
-                print("Collision between i {} and entity list {}".format(i, list_of_entities))
+                #print("Collision between i {} and entity list {}".format(i, list_of_entities))
                 list_of_entities.remove(i)
 
     def island_function(self, island_list):
@@ -107,10 +106,6 @@ class World:
             if inputa and inputb <= up_quarter:
                 if water_stat > 7:
                     add_list.append(inputi)
-
-
-
-
 
     def land_world(self, w_level):
         water_list = []
