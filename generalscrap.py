@@ -2,6 +2,16 @@ __author__ = 'iamja_000'
 
 __author__ = 'iamja_000'
 
+
+s = int(input("Enter a number "))
+r_list = []
+for i in range(-s, s+1):
+    print(i)
+    r_list.append(i)
+
+print(r_list)
+
+
 from itertools import product, starmap
 import random
 

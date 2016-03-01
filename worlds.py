@@ -24,6 +24,13 @@ class World:
         w_coord = list(product(range(self.x), range(self.y)))
         return w_coord
 
+    def get_neighbours_specifiable(self, x_coord, y_coord, radius):
+        r_list = []
+        for i in range(-radius, radius+1):
+            r_list.append(i)
+        cells = starmap(lambda a,b: (x_coord+a, y_coord+b), product((r_list), (r_list)))
+        return list(cells)[1:]
+
     def get_neighbours(self, x_coord, y_coord):
         cells = starmap(lambda a,b: (x_coord+a, y_coord+b), product((0,-1,+1), (0,-1,+1)))
         return list(cells)[1:]
@@ -50,8 +57,9 @@ class World:
         remaining_list = [x for x in our_coordinates if x not in water_list]
         extra_list = self.island_function(remaining_list)
         water_list = extra_list + water_list
-        self.space_creator_length(round(self.x/2), round(self.y/2), 5, water_list)
-        #self.space_creator(round(self.x/2), round(self.y/2), water_list)
+        sug_frequency = round(self.x)/3
+        print("Our suggested frequency is {}".format(sug_frequency))
+        self.space_creator_length(round(self.x/2), round(self.y/2), sug_frequency, water_list)
         return water_list
 
     def space_creator_length(self, roota, rootb, frequency, check_list):
@@ -69,14 +77,13 @@ class World:
             a, b = i
             self.space_creator(a, b, check_list)
 
-#some really weird shit is happening here
 
+    #NEXT STEP - MAKE RADIUS SCALE WITH SIZE 
     def space_creator(self, coordinate_a, coordinate_b, list_of_entities):
         #print("Checking {} {}".format(coordinate_a, coordinate_b))
-        nearby = self.get_neighbours(coordinate_a, coordinate_b)
+        nearby = self.get_neighbours_specifiable(coordinate_a, coordinate_b, 3)
         for i in nearby:
             if i in list_of_entities:
-                #print("Collision between i {} and entity list {}".format(i, list_of_entities))
                 list_of_entities.remove(i)
 
     def island_function(self, island_list):
