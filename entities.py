@@ -7,4 +7,18 @@ class City:
         self.x0 = a
         self.y0 = b
         self.growth = 0
-        print("CITY BORN AT X: {} Y: {} \n Origin X: {} Y: {}".format(self.x, self.y, self.x0, self.y0))
+        #print("CITY BORN AT X: {} Y: {} \n Origin X: {} Y: {}".format(self.x, self.y, self.x0, self.y0))
+
+    def get_location(self):
+        return self.x, self.y
+
+class Scout:
+    def __init__(self, x, y, origina, originb):
+        paths_taken = []
+        self.x = x
+        self.y = y
+        self.x0 = origina
+        self.y0 = originb
+
+    def get_location(self):
+        return self.x, self.y

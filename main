@@ -21,7 +21,16 @@ class Game:
         for i in dom_land:
             a, b = i
             self.bmap[b][a] = choice_1
+        city_loc = self.world.city_return()
+        for i in city_loc:
+            a, b = i
+            self.bmap[b][a] = "C"
+        scout_loc = self.world.scout_return()
+        for i in scout_loc:
+            a, b = i
+            self.bmap[b][a] = "S"
 
 
 game_world = Game()
 game_world.base_map()
+
