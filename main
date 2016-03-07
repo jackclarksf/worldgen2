@@ -30,7 +30,13 @@ class Game:
             a, b = i
             self.bmap[b][a] = "S"
 
+    def move_cycle(self):
+        self.world.scout_movement()
+
 
 game_world = Game()
+game_world.base_map()
+game_world.move_cycle()
+game_world.paint_map(land1)
 game_world.base_map()
 
