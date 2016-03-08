@@ -175,12 +175,16 @@ class World:
         for i in self.scouts:
             a, b = i.get_location()
             pos_moves = self.neighbour_move_options(a, b, 1)
-            print("Our moves: {}".format(pos_moves))
-            move = random.choice(pos_moves)
-            print("Should move scout {} {} to move {}".format(a, b, move))
-            c, d = move
-            i.x = c
-            i.y = d
+            if len(pos_moves) > 0:
+                print("Our moves: {}".format(pos_moves))
+                move = random.choice(pos_moves)
+                print("Should move scout {} {} to move {}".format(a, b, move))
+                c, d = move
+                i.x = c
+                i.y = d
+                self.scouts_loc.append(move)
+            else:
+                print("Out of moves!")
 
 
 
@@ -193,8 +197,10 @@ class World:
         water_list = self.water_return()
         our_neighbours = self.get_neighbours_specifiable(x, y, distance_to_check)
         city_locations = self.cities_loc
+
         pos_moves = [x for x in our_neighbours if x not in water_list]
-        final_moves = [x for x in pos_moves if x not in city_locations]
+        pos_moves_2 = [x for x in pos_moves if x not in self.scouts_loc]
+        final_moves = [x for x in pos_moves_2 if x not in city_locations]
         return final_moves
 
     def neighbour_type_check(self, x, y, distance_to_check, water_coordinates):
@@ -224,13 +230,13 @@ class World:
 
 #THIS IS HACKY AND WEIRD
     def scout_return(self):
-        scouts_loc = []
+        scouts_loc_loc = []
         for i in self.scouts:
             loca, locb = i.get_location()
             loc = loca, locb
-            scouts_loc.append(loc)
+            scouts_loc_loc.append(loc)
 
-        return scouts_loc
+        return scouts_loc_loc
 
 
 
