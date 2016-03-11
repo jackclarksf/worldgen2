@@ -14,7 +14,7 @@ class City:
 
 class Scout:
     def __init__(self, x, y, origina, originb):
-        paths_taken = []
+        self.paths_taken = []
         self.x = x
         self.y = y
         self.x0 = origina
@@ -22,3 +22,6 @@ class Scout:
 
     def get_location(self):
         return self.x, self.y
+
+    def return_paths(self):
+        return self.paths_taken

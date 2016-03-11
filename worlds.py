@@ -171,18 +171,40 @@ class World:
             else:
                 print("Looks like we don't have any spare neighbours.")
 
+    #SUPER HACKY, BUT GOOD IN PRINCIPLE, NOW JUST NEED TO REFACTOR
     def scout_movement(self):
         for i in self.scouts:
             a, b = i.get_location()
+            path_so_far = i.return_paths()
+            print("So far: {}".format(path_so_far))
             pos_moves = self.neighbour_move_options(a, b, 1)
             if len(pos_moves) > 0:
                 print("Our moves: {}".format(pos_moves))
+                if self.neighbour_type_check(a, b, 2, self.cities_loc) > 0:
+                    print("Looks like we have a city nearby!")
+                    i_origin = i.x0, i.y0
+                    print("We originated at {}".format(i_origin))
+                    print("Our city list is {}".format(self.cities_loc))
+                    other_cities = self.cities_loc
+                    other_cities.remove(i_origin)
+                    print("Our other cities are: {}".format(other_cities))
+                    if self.neighbour_type_check(a, b, 2, other_cities) > 0:
+                        print("Definite collision!")
+                        locations = self.neighbour_type_check_return(a, b, 2, other_cities)
+                        print("Other city locations are: {}".format(locations))
+                        for j in locations:
+                            c, d = j
+                            for l in pos_moves:
+                                e, f = l
+                                print("Checking city {} {} against move {} {} with scout at position: {} {}".format(c, d, e, f, a, b))
+
                 move = random.choice(pos_moves)
                 print("Should move scout {} {} to move {}".format(a, b, move))
                 c, d = move
                 i.x = c
                 i.y = d
                 self.scouts_loc.append(move)
+                i.paths_taken.append(move)
             else:
                 print("Out of moves!")
 
@@ -210,6 +232,14 @@ class World:
             if i in water_coordinates:
                 water_count += 1
         return water_count
+
+    def neighbour_type_check_return(self, x, y, distance_to_check, water_coordinates):
+        neighbours_to_check = self.get_neighbours_specifiable(x, y, distance_to_check)
+        neighbour_list = []
+        for i in neighbours_to_check:
+            if i in water_coordinates:
+                neighbour_list.append(i)
+        return neighbour_list
 
     def neighbour_type_check_boolean(self, x, y, distance_to_check, number_to_check, coordinates_to_check):
         neighbours_to_check = self.get_neighbours_specifiable(x, y, distance_to_check)
