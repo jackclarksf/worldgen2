@@ -7,7 +7,7 @@ class City:
         self.x0 = a
         self.y0 = b
         self.growth = 0
-        #print("CITY BORN AT X: {} Y: {} \n Origin X: {} Y: {}".format(self.x, self.y, self.x0, self.y0))
+        print("CITY BORN AT X: {} Y: {} \n Origin X: {} Y: {}".format(self.x, self.y, self.x0, self.y0))
 
     def get_location(self):
         return self.x, self.y
@@ -19,6 +19,7 @@ class Scout:
         self.y = y
         self.x0 = origina
         self.y0 = originb
+        print("SCOUT BORN AT X: {} Y: {} \n Origin X: {} Y: {}".format(self.x, self.y, self.x0, self.y0))
 
     def get_location(self):
         return self.x, self.y

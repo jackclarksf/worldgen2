@@ -5,9 +5,9 @@ land1 = "W"
 land2 = "'"
 size = int(input("What is the size? X by X format, please!"))
 
-
 class Game:
     def __init__(self):
+        self.tick = 0
         self.world = World(size, size)
         self.bmap = [[" " for i in range(size)] for i in range(size)]
         self.paint_map(land1)
@@ -17,6 +17,10 @@ class Game:
             print(i)
 
     def paint_map(self, choice_1):
+        blank_slate = self.world.world_coordinates()
+        for i in blank_slate:
+            a, b = i
+            self.bmap[b][a] = " "
         dom_land = self.world.water_return()
         for i in dom_land:
             a, b = i
@@ -25,30 +29,37 @@ class Game:
         for i in city_loc:
             a, b = i
             self.bmap[b][a] = "C"
+        path_loc = self.world.path_return()
+        for i in path_loc:
+            a, b = i
+            #print("Printing path: {} {}".format(a, b))
+            self.bmap[b][a] = "X"
         scout_loc = self.world.scout_return()
         for i in scout_loc:
             a, b = i
+            #print("Printing scout: {} {}".format(a, b))
             self.bmap[b][a] = "S"
+
 
     def move_cycle(self):
         self.world.scout_movement()
 
 
+    def tick_forward(self):
+        choice = input("Do you want to tick, [y]?")
+        if choice == "y":
+            self.tick += 1
+            print("Tick forward. Current tick: {}".format(self.tick))
+        else:
+            print("Invalid. Go again")
+            self.tick_forward()
+
+
 game_world = Game()
-game_world.base_map()
-game_world.move_cycle()
-game_world.paint_map(land1)
-game_world.base_map()
-game_world.move_cycle()
-game_world.paint_map(land1)
-game_world.base_map()
-game_world.move_cycle()
-game_world.paint_map(land1)
-game_world.base_map()
-game_world.move_cycle()
-game_world.paint_map(land1)
-game_world.base_map()
-game_world.move_cycle()
-game_world.paint_map(land1)
-game_world.base_map()
+
+while True:
+    game_world.paint_map(land1)
+    game_world.base_map()
+    game_world.move_cycle()
+    game_world.tick_forward()
 
