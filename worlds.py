@@ -20,7 +20,7 @@ class World:
         total_squares = self.x * self.x
         water_level = random.randint(0, 10)
         print("World born with size: {} comprising of {} squares and a water level of {}".format(self.x, total_squares, water_level))
-        self.water_list = self.water_world(water_level)
+        self.water_list = self.actual_water_world(water_level)
         self.city_generator()
         self.scout_generator()
 
@@ -160,7 +160,7 @@ class World:
             free_neighbours = [x for x in our_neighbours if x not in water_list]
             free_neighbours.remove(combined_loc)
             free_neighbours = self.take_out_negative_and_overweight_neighbours(free_neighbours)
-            print("Our cleaned neighbours: {}".format(free_neighbours))
+            #print("Our cleaned neighbours: {}".format(free_neighbours))
             if len(free_neighbours) > 0:
                 candidate_loc = random.choice(free_neighbours)
                 c, d = candidate_loc
@@ -179,47 +179,68 @@ class World:
             path_so_far = i.return_paths()
             pos_moves = self.neighbour_move_options(a, b, 1)
             pos_moves = self.take_out_negative_and_overweight_neighbours(pos_moves)
-            print("Our cleaned moves: {}".format(pos_moves))
+            #print("Our cleaned moves: {}".format(pos_moves))
             other_cities = []
             other_cities.extend(self.cities_loc)
             i_origin = i.x0, i.y0
             other_cities.remove(i_origin)
             if self.neighbour_type_check(a, b, 1, other_cities) > 0:
-                print("Nearby city!!!!")
                 pos_locations = self.neighbour_type_check_return(a, b, 1, other_cities)
                 our_decision = random.choice(pos_locations)
                 print("Scout at ab {} {} is gonna join with city at {}".format(a, b, our_decision))
                 c, d = our_decision
                 self.scouts.remove(i)
                 self.cities.append(City(a, b, c, d))
+                for i in self.cities:
+                    q, w = i.get_location()
+                    e = c, d
+                    r = q, w
+                    if e == r:
+                        i.add_growth()
+
                 nu_city = a, b
                 self.cities_loc.append(nu_city)
 
             elif len(pos_moves) > 0:
-                print("Our moves: {}".format(pos_moves))
+                our_hits = i.hit_rate()
+                if our_hits > 10:
+                    print("Taking extreme measures")
+                    if self.neighbour_type_check(a, b, 3, other_cities) > 0:
+                        locations = self.neighbour_type_check_return(a, b, 3, other_cities)
+                        chosen_location = random.choice(locations)
+                        c, d = chosen_location
+                        for l in pos_moves:
+                            e, f = l
+                            if c > e:
+                                if e > a:
+                                    pos_moves.remove(l)
+                            elif d > f:
+                                if f > b:
+                                    pos_moves.remove(l)
+                        print("Our pos moves w/ radius 3 are now: {}".format(pos_moves))
+
                 if self.neighbour_type_check(a, b, 2, other_cities) > 0:
                     print("Definite collision!")
                     locations = self.neighbour_type_check_return(a, b, 2, other_cities)
-                    print("Other city locations are: {}".format(locations))
                     chosen_location = random.choice(locations)
                     c, d = chosen_location
                     for l in pos_moves:
                         e, f = l
-                        print("Checking city {} {} against move {} {} with scout at position: {} {}".format(c, d, e, f, a, b))
+                        #print("Checking city {} {} against move {} {} with scout at position: {} {}".format(c, d, e, f, a, b))
                         if c > e:
-                            print("CE")
                             if e > a:
-                                print("EA")
                                 pos_moves.remove(l)
                         elif d > f:
-                            print("DF")
                             if f > b:
-                                print("FB")
                                 pos_moves.remove(l)
-                        print("Our pos moves are now: {}".format(pos_moves))
+                    print("Our pos moves are now: {}".format(pos_moves))
+                else:
+                    print("Lonely")
+                    i.add_hit_rate()
+
 
                 move = random.choice(pos_moves)
-                print("Should move scout {} {} to move {}".format(a, b, move))
+                print("Should move scout {} {} with hits {} to move {}".format(a, b, our_hits, move))
                 c, d = move
                 i.x = c
                 i.y = d
@@ -297,7 +318,7 @@ class World:
         for i in neighbours_to_check:
             if i in coordinates_to_check:
                 entity_count += 1
-        print("Our entity at {} {} has {} neighbours".format(x, y, entity_count))
+        #print("Our entity at {} {} has {} neighbours".format(x, y, entity_count))
         if entity_count > number_to_check:
             return True
         else:

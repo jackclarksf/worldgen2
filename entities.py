@@ -9,6 +9,10 @@ class City:
         self.growth = 0
         print("CITY BORN AT X: {} Y: {} \n Origin X: {} Y: {}".format(self.x, self.y, self.x0, self.y0))
 
+    def add_growth(self):
+        self.growth += 1
+        print("ADDED GROWTH to city at {} {}. Growth now {}".format(self.x, self.y, self.growth))
+
     def get_location(self):
         return self.x, self.y
 
@@ -19,6 +23,7 @@ class Scout:
         self.y = y
         self.x0 = origina
         self.y0 = originb
+        self.period_without_hit = 0
         print("SCOUT BORN AT X: {} Y: {} \n Origin X: {} Y: {}".format(self.x, self.y, self.x0, self.y0))
 
     def get_location(self):
@@ -26,3 +31,9 @@ class Scout:
 
     def return_paths(self):
         return self.paths_taken
+
+    def hit_rate(self):
+        return self.period_without_hit
+
+    def add_hit_rate(self):
+        self.period_without_hit += 1
