@@ -54,12 +54,16 @@ class Game:
             print("Invalid. Go again")
             self.tick_forward()
 
+    def auto_tick(self):
+        self.tick += 1
+
 
 game_world = Game()
 
-while True:
+#while True:
+while game_world.tick < 30:
     game_world.paint_map(land1)
     game_world.base_map()
     game_world.move_cycle()
-    game_world.tick_forward()
+    game_world.auto_tick()
 
