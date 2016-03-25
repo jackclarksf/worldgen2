@@ -4,17 +4,13 @@ from itertools import product, starmap
 import random
 from entities import City, Scout
 
-
 #OBJECTIVES:
-
-
+#write a city function that scans for neighbours and converts to same origin if connected
 
 class World:
     def __init__(self, x, y):
         self.cities = []
-        self.cities_loc = []
         self.scouts = []
-        self.scouts_loc = []
         self.x = int(x)
         self.y = int(y)
         total_squares = self.x * self.x
@@ -30,6 +26,14 @@ class World:
     def world_coordinates(self):
         w_coord = list(product(range(self.x), range(self.y)))
         return w_coord
+
+    def city_return(self):
+        city_locs = []
+        for i in self.cities:
+            loc = i.get_location()
+            city_locs.append(loc)
+        return city_locs
+
 
     def get_neighbours_specifiable(self, x_coord, y_coord, radius):
         r_list = []
@@ -116,30 +120,27 @@ class World:
 ###################################
 
     def city_generator(self):
-        global_co = self.world_coordinates()
-        water_list = self.water_return()
-        free = [x for x in global_co if x not in water_list]
+        free = [x for x in self.world_coordinates() if x not in self.water_return()]
         city_number = round(self.x/3)
         city_quantity = 0
+        #THIS LOOP CAN DEFINITELY BE NEATENED UP...
         while city_quantity < city_number:
             city_coord = random.choice(free)
             a, b = city_coord
-            while self.neighbour_type_check_boolean(a, b, 1, 2, water_list):
+            while self.neighbour_type_check_boolean(a, b, 1, 2, self.water_return()):
                 city_coord = random.choice(free)
                 a, b = city_coord
-            while self.neighbour_type_check_boolean(a, b, 2, 0, self.cities_loc):
+            while self.neighbour_type_check_boolean(a, b, 2, 0, self.city_return()):
                 city_coord = random.choice(free)
                 a, b = city_coord
 
             self.cities.append(City(a, b, a, b))
-            city_loc = a, b
-            self.cities_loc.append(city_loc)
-            print("Our cities: {}".format(self.cities_loc))
             city_quantity += 1
+        print("Our cities: {}".format(self.city_return()))
 
     def is_city_and_water_ok(self, a, b):
         false = 0
-        if self.neighbour_type_check_boolean(a, b, 2, 0, self.cities_loc):
+        if self.neighbour_type_check_boolean(a, b, 2, 0, self.city_return()):
             false += 1
         if self.neighbour_type_check_boolean(a, b, 1, 2, self.water_list):
             false += 1
@@ -151,12 +152,12 @@ class World:
             if i.growth > 10:
                 a, b = i.get_location()
                 c, d = i.x0, i.y0
-                print("City at {} {} with origin {} {} has growth of {}".format(a, b, c, d, i.growth))
                 pos_locs = self.neighbour_move_options_basic(a, b, 1)
-                print("Potential places for it = {}".format(pos_locs))
+                print("City at {} {} with origin {} {} has growth of {} \n potential moves = {} ".format(a, b, c, d, i.growth, pos_locs))
                 our_move = random.choice(pos_locs)
                 x, y = our_move
                 self.scouts.append(Scout(x, y, c, d))
+                i.growth = 0
             elif i.growth > 0:
                 if i.growth < 11:
                     i.add_growth()
@@ -167,27 +168,22 @@ class World:
 ###################################
 
     def scout_generator(self):
-        global_co = self.world_coordinates()
-        water_list = self.water_return()
-        free = [x for x in global_co if x not in water_list]
         for i in self.cities:
             a, b = i.get_location()
+            x0, y0 = i.x0, i.y0
             combined_loc = a, b
             our_neighbours = self.get_neighbours_specifiable(a, b, 1)
-            free_neighbours = [x for x in our_neighbours if x not in water_list]
+            free_neighbours = [x for x in our_neighbours if x not in self.water_return()]
             free_neighbours.remove(combined_loc)
             free_neighbours = self.take_out_negative_and_overweight_neighbours(free_neighbours)
-            #print("Our cleaned neighbours: {}".format(free_neighbours))
             if len(free_neighbours) > 0:
                 candidate_loc = random.choice(free_neighbours)
                 c, d = candidate_loc
-                self.scouts.append(Scout(c, d, a, b))
+                self.scouts.append(Scout(c, d, x0, y0))
             else:
                 print("Looks like we don't have any spare neighbours.")
         for i in self.scouts:
-            a, b = i.get_location()
-            init_path = a, b
-            i.paths_taken.append(init_path)
+            i.paths_taken.append(i.get_location())
 
     #SUPER HACKY, BUT GOOD IN PRINCIPLE, NOW JUST NEED TO REFACTOR
     def scout_movement(self):
@@ -198,7 +194,7 @@ class World:
             pos_moves = self.take_out_negative_and_overweight_neighbours(pos_moves)
             #print("Our cleaned moves: {}".format(pos_moves))
             other_cities = []
-            other_cities.extend(self.cities_loc)
+            other_cities.extend(self.city_return())
             i_origin = i.x0, i.y0
             other_cities.remove(i_origin)
             if self.neighbour_type_check(a, b, 1, other_cities) > 0:
@@ -215,13 +211,10 @@ class World:
                     if e == r:
                         i.add_growth()
 
-                nu_city = a, b
-                self.cities_loc.append(nu_city)
-
             elif len(pos_moves) > 0:
                 our_hits = i.hit_rate()
                 if our_hits > 10:
-                    print("Taking extreme measures")
+                    #print("Taking extreme measures")
                     if self.neighbour_type_check(a, b, 3, other_cities) > 0:
                         locations = self.neighbour_type_check_return(a, b, 3, other_cities)
                         chosen_location = random.choice(locations)
@@ -237,7 +230,6 @@ class World:
                         print("Our pos moves w/ radius 3 are now: {}".format(pos_moves))
 
                 if self.neighbour_type_check(a, b, 2, other_cities) > 0:
-                    print("Definite collision!")
                     locations = self.neighbour_type_check_return(a, b, 2, other_cities)
                     chosen_location = random.choice(locations)
                     c, d = chosen_location
@@ -252,7 +244,6 @@ class World:
                                 pos_moves.remove(l)
                     print("Our pos moves are now: {}".format(pos_moves))
                 else:
-                    print("Lonely")
                     i.add_hit_rate()
 
 
@@ -261,11 +252,14 @@ class World:
                 c, d = move
                 i.x = c
                 i.y = d
-                self.scouts_loc.append(move)
                 i.paths_taken.append(move)
 
             else:
                 print("Out of moves!")
+                i.more_lonely()
+                if i.lonely > 10:
+                    print("Too lonely, killing scout at position {} {}".format(a, b))
+                    self.scouts.remove(i)
 
 
 
@@ -293,7 +287,7 @@ class World:
     def neighbour_move_options(self, x, y, distance_to_check):
         water_list = self.water_return()
         our_neighbours = self.get_neighbours_specifiable(x, y, distance_to_check)
-        city_locations = self.cities_loc
+        city_locations = self.city_return()
         scout_locations = []
         for i in self.scouts:
             i.get_location()
@@ -305,10 +299,10 @@ class World:
         for i in final_moves:
             a, b = i
             if a < 0:
-                print("Looks like a {} of i {} is less than 0".format(a, i))
+                #print("Looks like a {} of i {} is less than 0".format(a, i))
                 final_moves.remove(i)
             elif b < 0:
-                print("Looks like b {} of i {} is less than 0".format(b, i))
+                #print("Looks like b {} of i {} is less than 0".format(b, i))
                 final_moves.remove(i)
 
         return final_moves
@@ -359,8 +353,7 @@ class World:
         return final_moves
 
 
-    def city_return(self):
-        return self.cities_loc
+
 
 #THIS IS HACKY AND WEIRD
     def scout_return(self):

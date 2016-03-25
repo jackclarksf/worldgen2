@@ -24,6 +24,7 @@ class Scout:
         self.x0 = origina
         self.y0 = originb
         self.period_without_hit = 0
+        self.lonely = 0
         print("SCOUT BORN AT X: {} Y: {} \n Origin X: {} Y: {}".format(self.x, self.y, self.x0, self.y0))
 
     def get_location(self):
@@ -37,3 +38,9 @@ class Scout:
 
     def add_hit_rate(self):
         self.period_without_hit += 1
+
+    def how_lonely(self):
+        return self.lonely
+
+    def more_lonely(self):
+        self.lonely += 1
