@@ -145,6 +145,23 @@ class World:
             false += 1
         print("Value for coord {} {} is {}".format(a, b, false))
 
+
+    def city_growth(self):
+        for i in self.cities:
+            if i.growth > 10:
+                a, b = i.get_location()
+                c, d = i.x0, i.y0
+                print("City at {} {} with origin {} {} has growth of {}".format(a, b, c, d, i.growth))
+                pos_locs = self.neighbour_move_options_basic(a, b, 1)
+                print("Potential places for it = {}".format(pos_locs))
+                our_move = random.choice(pos_locs)
+                x, y = our_move
+                self.scouts.append(Scout(x, y, c, d))
+            elif i.growth > 0:
+                if i.growth < 11:
+                    i.add_growth()
+
+
 ###################################
 ######## ^^ SCOUT STUFF ^^#########
 ###################################
@@ -324,6 +341,22 @@ class World:
         else:
             return False
 
+    def neighbour_move_options_basic(self, x, y, distance_to_check):
+        water_list = self.water_return()
+        our_neighbours = self.get_neighbours_specifiable(x, y, distance_to_check)
+        city_locations = []
+        for i in self.cities:
+            i.get_location()
+            city_locations.append(i)
+        scout_locations = []
+        for i in self.scouts:
+            i.get_location()
+            scout_locations.append(i)
+
+        pos_moves = [x for x in our_neighbours if x not in water_list]
+        pos_moves_2 = [x for x in pos_moves if x not in scout_locations]
+        final_moves = [x for x in pos_moves_2 if x not in city_locations]
+        return final_moves
 
 
     def city_return(self):

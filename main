@@ -40,6 +40,9 @@ class Game:
             #print("Printing scout: {} {}".format(a, b))
             self.bmap[b][a] = "S"
 
+    def state_checker(self):
+        self.world.city_growth()
+
 
     def move_cycle(self):
         self.world.scout_movement()
@@ -62,6 +65,7 @@ game_world = Game()
 
 #while True:
 while game_world.tick < 30:
+    game_world.state_checker()
     game_world.paint_map(land1)
     game_world.base_map()
     game_world.move_cycle()
