@@ -153,7 +153,7 @@ class World:
             if i.growth > 10:
                 a, b = i.get_location()
                 c, d = i.x0, i.y0
-                pos_locs = self.neighbour_move_options_basic(a, b, 1)
+                pos_locs = self.neighbour_move_options(a, b, 1)
                 print("City at {} {} with origin {} {} has growth of {} \n potential moves = {} ".format(a, b, c, d, i.growth, pos_locs))
                 our_move = random.choice(pos_locs)
                 x, y = our_move
@@ -191,16 +191,13 @@ class World:
         for i in self.scouts:
             a, b = i.get_location()
             scout_origa, scout_origb = i.return_origin()
-            pos_moves = self.take_out_negative_and_overweight_neighbours(self.neighbour_move_options(a, b, 1))
-            other_cities = self.city_return()
-            other_cities.remove(i.return_origin())
-
-            #need to write a function to remove ones with same origin
+            scout_orig = i.return_origin()
+            pos_moves = self.neighbour_move_options(a, b, 1)
+            other_cities = self.origin_cleaner(self.cities, scout_orig)
 
             if self.neighbour_type_check(a, b, 1, other_cities) > 0:
                 our_decision = random.choice(self.neighbour_type_check_return(a, b, 1, other_cities))
                 print("Scout at ab {} {} with origination {} {} is gonna join with city at {}".format(a, b, scout_origa, scout_origb, our_decision))
-                c, d = our_decision
                 self.scouts.remove(i)
                 for i in self.cities:
                     r = i.get_location()
@@ -210,10 +207,10 @@ class World:
                         self.cities.append(City(a, b, origina, originb))
                         i.add_growth()
 
+#THIS MOVEMENT LOOP IS A BIT FUCKED I THINK
             elif len(pos_moves) > 0:
                 our_hits = i.hit_rate()
                 if our_hits > 10:
-                    #print("Taking extreme measures")
                     if self.neighbour_type_check(a, b, 3, other_cities) > 0:
                         locations = self.neighbour_type_check_return(a, b, 3, other_cities)
                         chosen_location = random.choice(locations)
@@ -267,7 +264,12 @@ class World:
 #### ^^ NEIGHBOURS AND CHUMS ^^####
 ###################################
 
+                ####THIS WHOLE SECTION CAN BE SLIMMED DOWN, I THINK ###
+
     def take_out_negative_and_overweight_neighbours(self, input_list):
+        """
+        This function takes in a list and then removes coordinates that are out of bounds
+        """
         temp_list = []
         for i in input_list:
             a, b = i
@@ -282,7 +284,6 @@ class World:
         output_list = [x for x in input_list if x not in temp_list]
         return output_list
 
-
     def neighbour_move_options(self, x, y, distance_to_check):
         water_list = self.water_return()
         our_neighbours = self.get_neighbours_specifiable(x, y, distance_to_check)
@@ -295,14 +296,7 @@ class World:
         pos_moves = [x for x in our_neighbours if x not in water_list]
         pos_moves_2 = [x for x in pos_moves if x not in scout_locations]
         final_moves = [x for x in pos_moves_2 if x not in city_locations]
-        for i in final_moves:
-            a, b = i
-            if a < 0:
-                #print("Looks like a {} of i {} is less than 0".format(a, i))
-                final_moves.remove(i)
-            elif b < 0:
-                #print("Looks like b {} of i {} is less than 0".format(b, i))
-                final_moves.remove(i)
+        final_moves = self.take_out_negative_and_overweight_neighbours(final_moves)
 
         return final_moves
 
@@ -330,22 +324,13 @@ class World:
         else:
             return False
 
-    def neighbour_move_options_basic(self, x, y, distance_to_check):
-        water_list = self.water_return()
-        our_neighbours = self.get_neighbours_specifiable(x, y, distance_to_check)
-        city_locations = []
-        for i in self.cities:
-            i.get_location()
-            city_locations.append(i)
-        scout_locations = []
-        for i in self.scouts:
-            i.get_location()
-            scout_locations.append(i)
-
-        pos_moves = [x for x in our_neighbours if x not in water_list]
-        pos_moves_2 = [x for x in pos_moves if x not in scout_locations]
-        final_moves = [x for x in pos_moves_2 if x not in city_locations]
-        return final_moves
+    def origin_cleaner(self, input_list, origin_to_clean):
+        orig_list = []
+        for i in input_list:
+            i_origin = i.return_city_origin()
+            if i_origin != origin_to_clean:
+                orig_list.append(i_origin)
+        return orig_list
 
 
 
