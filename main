@@ -64,11 +64,16 @@ class Game:
 game_world = Game()
 
 #while True:
-while game_world.tick < 50:
+while game_world.tick < 350:
     game_world.state_checker()
     game_world.paint_map(land1)
     game_world.base_map()
     game_world.move_cycle()
-    #game_world.auto_tick()
-    game_world.tick_forward()
+    game_world.auto_tick()
+    #game_world.tick_forward()
+
+
+#OBSERVATIONS
+#1) LONELINESS ISN'T WORKING
+#2) NEED BETTER TELEMETRY
 

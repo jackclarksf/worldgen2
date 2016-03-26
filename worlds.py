@@ -128,25 +128,17 @@ class World:
         while city_quantity < city_number:
             city_coord = random.choice(free)
             a, b = city_coord
-            while self.neighbour_type_check_boolean(a, b, 1, 2, self.water_return()):
+            while len(self.neighbour_type_check_return(a, b, 1, self.water_return())) > 1:
+               #PRETTY SURE THIS ISN'T WORKING PROPERLY. NEED BETTER/DIFFERENT TELEMETRY
                 city_coord = random.choice(free)
                 a, b = city_coord
-            while self.neighbour_type_check_boolean(a, b, 2, 0, self.city_return()):
+            while len(self.neighbour_type_check_return(a, b, 2, self.city_return())) > 0:
                 city_coord = random.choice(free)
                 a, b = city_coord
 
             self.cities.append(City(a, b, a, b))
             city_quantity += 1
         print("Our cities: {}".format(self.city_return()))
-
-    def is_city_and_water_ok(self, a, b):
-        false = 0
-        if self.neighbour_type_check_boolean(a, b, 2, 0, self.city_return()):
-            false += 1
-        if self.neighbour_type_check_boolean(a, b, 1, 2, self.water_list):
-            false += 1
-        print("Value for coord {} {} is {}".format(a, b, false))
-
 
     def city_growth(self):
         for i in self.cities:
@@ -195,7 +187,7 @@ class World:
             pos_moves = self.neighbour_move_options(a, b, 1)
             other_cities = self.origin_cleaner(self.cities, scout_orig)
 
-            if self.neighbour_type_check(a, b, 1, other_cities) > 0:
+            if len(self.neighbour_type_check_return(a, b, 1, other_cities)) > 0:
                 our_decision = random.choice(self.neighbour_type_check_return(a, b, 1, other_cities))
                 print("Scout at ab {} {} with origination {} {} is gonna join with city at {}".format(a, b, scout_origa, scout_origb, our_decision))
                 self.scouts.remove(i)
@@ -211,7 +203,7 @@ class World:
             elif len(pos_moves) > 0:
                 our_hits = i.hit_rate()
                 if our_hits > 10:
-                    if self.neighbour_type_check(a, b, 3, other_cities) > 0:
+                    if len(self.neighbour_type_check_return(a, b, 3, other_cities)) > 0:
                         locations = self.neighbour_type_check_return(a, b, 3, other_cities)
                         chosen_location = random.choice(locations)
                         c, d = chosen_location
@@ -225,7 +217,7 @@ class World:
                                     pos_moves.remove(l)
                         print("Our pos moves w/ radius 3 are now: {}".format(pos_moves))
 
-                if self.neighbour_type_check(a, b, 2, other_cities) > 0:
+                if len(self.neighbour_type_check_return(a, b, 2, other_cities)) > 0:
                     locations = self.neighbour_type_check_return(a, b, 2, other_cities)
                     chosen_location = random.choice(locations)
                     c, d = chosen_location
@@ -250,6 +242,7 @@ class World:
                 i.y = d
                 i.paths_taken.append(move)
 
+
             else:
                 print("Out of moves!")
                 i.more_lonely()
@@ -257,6 +250,7 @@ class World:
                     print("Too lonely, killing scout at position {} {}".format(a, b))
                     self.scouts.remove(i)
 
+#################^^^^ THERE'S SOME PRETTY UGLY STUFF GOING ON IN THIS LOOP
 
 
 
@@ -300,29 +294,9 @@ class World:
 
         return final_moves
 
-    def neighbour_type_check(self, x, y, distance_to_check, water_coordinates):
-        neighbours_to_check = self.get_neighbours_specifiable(x, y, distance_to_check)
-        water_count = 0
-        for i in neighbours_to_check:
-            if i in water_coordinates:
-                water_count += 1
-        return water_count
-
     def neighbour_type_check_return(self, x, y, distance_to_check, entity_coordinates):
         neighbour_list = [x for x in self.get_neighbours_specifiable(x, y, distance_to_check) if x in entity_coordinates]
         return neighbour_list
-
-    def neighbour_type_check_boolean(self, x, y, distance_to_check, number_to_check, coordinates_to_check):
-        neighbours_to_check = self.get_neighbours_specifiable(x, y, distance_to_check)
-        entity_count = 0
-        for i in neighbours_to_check:
-            if i in coordinates_to_check:
-                entity_count += 1
-        #print("Our entity at {} {} has {} neighbours".format(x, y, entity_count))
-        if entity_count > number_to_check:
-            return True
-        else:
-            return False
 
     def origin_cleaner(self, input_list, origin_to_clean):
         orig_list = []
@@ -333,14 +307,11 @@ class World:
         return orig_list
 
 
-
-
 #THIS IS HACKY AND WEIRD
     def scout_return(self):
         scouts_loc_loc = []
         for i in self.scouts:
-            loca, locb = i.get_location()
-            loc = loca, locb
+            loc = i.get_location()
             scouts_loc_loc.append(loc)
 
         return scouts_loc_loc
@@ -353,14 +324,6 @@ class World:
 
         return our_path_list
 
-
-#######################
-##############tick funk
-
-
-#####################################
-#####################################
-#####################################
 #####################################
 
 
