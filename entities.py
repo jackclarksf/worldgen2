@@ -11,10 +11,13 @@ class City:
 
     def add_growth(self):
         self.growth += 1
-        print("ADDED GROWTH to city at {} {}. Growth now {}".format(self.x, self.y, self.growth))
+        print("ADDED GROWTH to city at {} {} with origin {} {}. Growth now {}".format(self.x, self.y, self.x0, self.y0, self.growth))
 
     def get_location(self):
         return self.x, self.y
+
+    def return_city_origin(self):
+        return self.x0, self.y0
 
 class Scout:
     def __init__(self, x, y, origina, originb):
@@ -44,3 +47,6 @@ class Scout:
 
     def more_lonely(self):
         self.lonely += 1
+
+    def return_origin(self):
+        return self.x0, self.y0

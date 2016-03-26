@@ -6,6 +6,7 @@ from entities import City, Scout
 
 #OBJECTIVES:
 #write a city function that scans for neighbours and converts to same origin if connected
+#probably implement by adding age to city. The oldest city propagates origin to others connected to it.
 
 class World:
     def __init__(self, x, y):
@@ -172,16 +173,16 @@ class World:
             a, b = i.get_location()
             x0, y0 = i.x0, i.y0
             combined_loc = a, b
-            our_neighbours = self.get_neighbours_specifiable(a, b, 1)
-            free_neighbours = [x for x in our_neighbours if x not in self.water_return()]
+            free_neighbours = self.take_out_negative_and_overweight_neighbours([x for x in self.get_neighbours_specifiable(a, b, 1) if x not in self.water_return()])
             free_neighbours.remove(combined_loc)
-            free_neighbours = self.take_out_negative_and_overweight_neighbours(free_neighbours)
+
             if len(free_neighbours) > 0:
                 candidate_loc = random.choice(free_neighbours)
                 c, d = candidate_loc
                 self.scouts.append(Scout(c, d, x0, y0))
             else:
                 print("Looks like we don't have any spare neighbours.")
+
         for i in self.scouts:
             i.paths_taken.append(i.get_location())
 
@@ -189,26 +190,24 @@ class World:
     def scout_movement(self):
         for i in self.scouts:
             a, b = i.get_location()
-            path_so_far = i.return_paths()
-            pos_moves = self.neighbour_move_options(a, b, 1)
-            pos_moves = self.take_out_negative_and_overweight_neighbours(pos_moves)
-            #print("Our cleaned moves: {}".format(pos_moves))
-            other_cities = []
-            other_cities.extend(self.city_return())
-            i_origin = i.x0, i.y0
-            other_cities.remove(i_origin)
+            scout_origa, scout_origb = i.return_origin()
+            pos_moves = self.take_out_negative_and_overweight_neighbours(self.neighbour_move_options(a, b, 1))
+            other_cities = self.city_return()
+            other_cities.remove(i.return_origin())
+
+            #need to write a function to remove ones with same origin
+
             if self.neighbour_type_check(a, b, 1, other_cities) > 0:
-                pos_locations = self.neighbour_type_check_return(a, b, 1, other_cities)
-                our_decision = random.choice(pos_locations)
-                print("Scout at ab {} {} is gonna join with city at {}".format(a, b, our_decision))
+                our_decision = random.choice(self.neighbour_type_check_return(a, b, 1, other_cities))
+                print("Scout at ab {} {} with origination {} {} is gonna join with city at {}".format(a, b, scout_origa, scout_origb, our_decision))
                 c, d = our_decision
                 self.scouts.remove(i)
-                self.cities.append(City(a, b, c, d))
                 for i in self.cities:
-                    q, w = i.get_location()
-                    e = c, d
-                    r = q, w
-                    if e == r:
+                    r = i.get_location()
+                    if our_decision == r:
+                        origina, originb = i.return_city_origin()
+                        print("This city at {} has origin {} {}".format(r, origina, originb))
+                        self.cities.append(City(a, b, origina, originb))
                         i.add_growth()
 
             elif len(pos_moves) > 0:
@@ -315,12 +314,8 @@ class World:
                 water_count += 1
         return water_count
 
-    def neighbour_type_check_return(self, x, y, distance_to_check, water_coordinates):
-        neighbours_to_check = self.get_neighbours_specifiable(x, y, distance_to_check)
-        neighbour_list = []
-        for i in neighbours_to_check:
-            if i in water_coordinates:
-                neighbour_list.append(i)
+    def neighbour_type_check_return(self, x, y, distance_to_check, entity_coordinates):
+        neighbour_list = [x for x in self.get_neighbours_specifiable(x, y, distance_to_check) if x in entity_coordinates]
         return neighbour_list
 
     def neighbour_type_check_boolean(self, x, y, distance_to_check, number_to_check, coordinates_to_check):

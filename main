@@ -25,10 +25,6 @@ class Game:
         for i in dom_land:
             a, b = i
             self.bmap[b][a] = choice_1
-        city_loc = self.world.city_return()
-        for i in city_loc:
-            a, b = i
-            self.bmap[b][a] = "C"
         path_loc = self.world.path_return()
         for i in path_loc:
             a, b = i
@@ -39,6 +35,10 @@ class Game:
             a, b = i
             #print("Printing scout: {} {}".format(a, b))
             self.bmap[b][a] = "S"
+        city_loc = self.world.city_return()
+        for i in city_loc:
+            a, b = i
+            self.bmap[b][a] = "C"
 
     def state_checker(self):
         self.world.city_growth()
