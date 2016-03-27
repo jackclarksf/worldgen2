@@ -44,11 +44,15 @@ class Game:
             a, b = i
             self.bmap[b][a] = "R"
 
-        print("Our state. On screen = {} scouts, {} cities".format(len(scout_loc),len(city_loc)))
+        r_list = []
+        for i in self.world.roads:
+            r_list.append(i)
+
+        print("Our state. On screen = {} scouts, {} cities {} road tiles from {} roads".format(len(scout_loc),len(city_loc), len(road_loc), len(r_list)))
 
     def state_checker(self):
         self.world.city_growth()
-
+        self.world.city_origin_rationalizer()
 
     def move_cycle(self):
         self.world.scout_movement()

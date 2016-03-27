@@ -105,7 +105,6 @@ class World:
                 if water_stat > 7:
                     add_list.append(inputi)
 
-
 ###################################
 ######## ^^ CITY STUFF ^^##########
 ###################################
@@ -137,11 +136,12 @@ class World:
             c, d = i.x0, i.y0
             if i.growth > 10:
                 pos_locs = self.neighbour_move_options(a, b, 1)
-                #print("City at {} {} with origin {} {} has growth of {} \n potential moves = {} ".format(a, b, c, d, i.growth, pos_locs))
-                our_move = random.choice(pos_locs)
-                x, y = our_move
-                self.scouts.append(Scout(x, y, c, d))
-                i.growth = 0
+                if len(pos_locs) > 0:
+                    #print("City at {} {} with origin {} {} has growth of {} \n potential moves = {} ".format(a, b, c, d, i.growth, pos_locs))
+                    our_move = random.choice(pos_locs)
+                    x, y = our_move
+                    self.scouts.append(Scout(x, y, c, d))
+                    i.growth = 0
             elif i.growth > 0:
                 if i.growth < 11:
                     i.add_growth()
@@ -154,6 +154,16 @@ class World:
                 x, y = our_move
                 self.scouts.append(Scout(x, y, c, d))
                 #NOT CHECKING ORIGIN EFFECTIVELY HERE
+
+    def city_origin_rationalizer(self):
+        city_origin_dict = dict()
+        for i in self.cities:
+            city_origin_dict[i.get_location()] = i.return_city_origin()
+        print("Our cities & origin: {}".format(city_origin_dict))
+
+
+
+
 
 
 ###################################
