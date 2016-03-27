@@ -41,8 +41,12 @@ class World:
 
     def actual_water_world(self, w_level):
         water_list = []
-        print("Creating an island world")
         our_coordinates = self.world_coordinates()
+        remaining_list = [x for x in our_coordinates if x not in water_list]
+        extra_list = self.island_function(remaining_list)
+        water_list = extra_list + water_list
+        sug_frequency = round(self.x)/3
+        self.space_creator_length((round(self.x/3))*2, round(self.y/2), sug_frequency, water_list)
         for i in our_coordinates:
             a, b = i
             if a == 0:
@@ -53,12 +57,6 @@ class World:
                 water_list.append(i)
             elif b == self.x-1:
                 water_list.append(i)
-        remaining_list = [x for x in our_coordinates if x not in water_list]
-        extra_list = self.island_function(remaining_list)
-        water_list = extra_list + water_list
-        sug_frequency = round(self.x)/3
-        print("Our suggested frequency is {}".format(sug_frequency))
-        self.space_creator_length(round(self.x/2), round(self.y/2), sug_frequency, water_list)
         return water_list
 
     def island_function(self, island_list):
@@ -84,9 +82,9 @@ class World:
             a, b = i
             self.space_creator(a, b, check_list)
 
-    #NEXT STEP - MAKE RADIUS SCALE WITH SIZE
     def space_creator(self, coordinate_a, coordinate_b, list_of_entities):
-        rad_to_check = round((self.x/3)/3)
+        rad_to_check = round((self.x/3)/2)
+        #print("cHECKING RADIUS AT A: {} B{} WITH RADIUS {}".format(coordinate_a, coordinate_b, rad_to_check))
         nearby = self.get_neighbours_specifiable(coordinate_a, coordinate_b, rad_to_check)
         for i in nearby:
             if i in list_of_entities:
@@ -132,13 +130,14 @@ class World:
             city_quantity += 1
         print("Our cities: {}".format(self.city_return()))
 
+#PROLIFERATING TOO MANY CITIES. NEED TO ADD A DECAY FUNCTION.
     def city_growth(self):
         for i in self.cities:
+            a, b = i.get_location()
+            c, d = i.x0, i.y0
             if i.growth > 10:
-                a, b = i.get_location()
-                c, d = i.x0, i.y0
                 pos_locs = self.neighbour_move_options(a, b, 1)
-                print("City at {} {} with origin {} {} has growth of {} \n potential moves = {} ".format(a, b, c, d, i.growth, pos_locs))
+                #print("City at {} {} with origin {} {} has growth of {} \n potential moves = {} ".format(a, b, c, d, i.growth, pos_locs))
                 our_move = random.choice(pos_locs)
                 x, y = our_move
                 self.scouts.append(Scout(x, y, c, d))
@@ -146,6 +145,15 @@ class World:
             elif i.growth > 0:
                 if i.growth < 11:
                     i.add_growth()
+            i.add_age()
+            birth_ages = [30, 60, 120, 240]
+            if i.age in birth_ages:
+                pos_locs = self.neighbour_move_options(a, b, 1)
+                print("City at {} {} with origin {} {} has growth of {} \n potential moves = {} ".format(a, b, c, d, i.growth, pos_locs))
+                our_move = random.choice(pos_locs)
+                x, y = our_move
+                self.scouts.append(Scout(x, y, c, d))
+                #NOT CHECKING ORIGIN EFFECTIVELY HERE
 
 
 ###################################
@@ -182,7 +190,7 @@ class World:
 
             if len(self.neighbour_type_check_return(a, b, 1, other_cities)) > 0:
                 our_decision = random.choice(self.neighbour_type_check_return(a, b, 1, other_cities))
-                print("Scout at ab {} {} with origination {} {} is gonna join with city at {}".format(a, b, scout_origa, scout_origb, our_decision))
+                #print("Scout at ab {} {} with origination {} {} is gonna join with city at {}".format(a, b, scout_origa, scout_origb, our_decision))
                 self.scouts.remove(i)
                 for i in self.cities:
                     r = i.get_location()
@@ -195,7 +203,7 @@ class World:
                         #THIS IS WHERE WE CALL THE ROAD CREATOR FUNCTION
 
             elif our_hits > 50:
-                print("We've been talking aimless for too long with our {} hits".format(our_hits))
+                #print("We've been talking aimless for too long with our {} hits".format(our_hits))
                 print("Too aimless, killing scout at position {} {}".format(a, b))
                 self.scouts.remove(i)
 
@@ -215,7 +223,7 @@ class World:
                             elif d > f:
                                 if f > b:
                                     pos_moves.remove(l)
-                        print("Our pos moves w/ radius 3 are now: {}".format(pos_moves))
+                        #print("Our pos moves w/ radius 3 are now: {}".format(pos_moves))
 
                 if len(self.neighbour_type_check_return(a, b, 2, other_cities)) > 0:
                     locations = self.neighbour_type_check_return(a, b, 2, other_cities)
@@ -230,12 +238,12 @@ class World:
                         elif d > f:
                             if f > b:
                                 pos_moves.remove(l)
-                    print("Our pos moves are now: {}".format(pos_moves))
+                    #print("Our pos moves are now: {}".format(pos_moves))
                 else:
                     i.add_hit_rate()
 
                 move = random.choice(pos_moves)
-                print("Should move scout {} {} with hits {} to move {}".format(a, b, our_hits, move))
+                #print("Should move scout {} {} with hits {} to move {}".format(a, b, our_hits, move))
                 c, d = move
                 i.x = c
                 i.y = d
@@ -260,23 +268,21 @@ class World:
 
     def road_constructor(self, city_coord_a, city_coord_b, origin_coord_a, origin_coord_b):
         road_path = []
-        print("Attempting to draw road between {} {} and origin {} {}".format(city_coord_a, city_coord_b, origin_coord_a, origin_coord_b))
+        #print("Attempting to draw road between {} {} and origin {} {}".format(city_coord_a, city_coord_b, origin_coord_a, origin_coord_b))
         dummy_city_a = city_coord_a
         dummy_city_b = city_coord_b
         dummy_origin_a = origin_coord_a
         dummy_origin_b = origin_coord_b
         a_diff = dummy_city_a - dummy_origin_a
         b_diff = dummy_city_b - dummy_origin_b
-        print("Our diffs are X {} and Y {}".format(a_diff, b_diff))
+        #print("Our diffs are X {} and Y {}".format(a_diff, b_diff))
         abs_a_diff = abs(dummy_city_a - dummy_origin_a)
         abs_b_diff = abs(dummy_city_b - dummy_origin_b)
-        print("our abs diff x {} and y {}".format(abs_a_diff, abs_b_diff))
         while abs_a_diff > 0:
             calc_options = [-1, 1]
             dummy_city_a += random.choice(calc_options)
             new_diff = abs(dummy_city_a - dummy_origin_a)
             if new_diff < abs_a_diff:
-                print("A 'A' Diff success")
                 combined_a = dummy_city_a, dummy_city_b
                 road_path.append(combined_a)
                 abs_a_diff = new_diff
@@ -286,7 +292,6 @@ class World:
             dummy_city_b += random.choice(calc_options)
             new_diff = abs(dummy_city_b - dummy_origin_b)
             if new_diff < abs_b_diff:
-                print("A 'B' Diff success")
                 combined_b = dummy_city_a, dummy_city_b
                 road_path.append(combined_b)
                 abs_b_diff = new_diff
@@ -295,13 +300,10 @@ class World:
         seeker_coordinate = origin_coord_a, origin_coord_b
         city_coordinate = city_coord_a, city_coord_b
         if seeker_coordinate in road_path:
-            print("Houston, we may have found it!")
             road_path.remove(seeker_coordinate)
 
             self.roads.append(Road(city_coordinate, seeker_coordinate, road_path))
 
-        #create a road entity
-        #draw the road entity on a screen
 
 ###################################
 #####NEIGHBOURS AND CHUMS#####
@@ -401,10 +403,11 @@ class World:
         our_water = self.water_return()
         print("At tick number: {} \n Water: {} \n Scouts: {} \n Paths: {} \n Cities: {}".format(tick_number, our_water, our_scouts, our_paths, our_cities))
         self.update_dictionary(our_paths, our_scouts)
-        print("Dictionary now: {}".format(self.tile_pop_dict))
-        #NEXT STEP: WRITE THIS OUT TO A TEXT FILE
+        #print("Dictionary now: {}".format(self.tile_pop_dict))
         city_dictionary = self.city_dictionary()
-        print("Our cities are now: {}".format(city_dictionary))
+        #print("Our cities are now: {}".format(city_dictionary))
+        #NEXT STEP: WRITE THIS OUT TO A TEXT FILE
+
 
     #FUNCTION COUNTS INSTANCES OF SCOUTS, PATHS, IN SPECIFIC COORDINATE. INCREMENTS BY 1 IF PRESENT.
 
@@ -419,7 +422,7 @@ class World:
         city_dict = dict()
         for i in self.cities:
             location = i.get_location()
-            i.add_age()
+            #i.add_age()
             city_dict[location] = i.age
         return city_dict
 
