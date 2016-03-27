@@ -1,5 +1,22 @@
 __author__ = 'iamja_000'
 
+class Vegetation:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.vitality = 1
+
+    def increase_vitality(self):
+        self.vitality += 1
+
+    def decrease_vitality(self):
+        self.vitality -= 1
+
+    def return_location(self):
+        return self.x, self.y
+
+
+
 class City:
     def __init__(self, x, y, a, b):
         self.x = x
@@ -64,4 +81,10 @@ class Road:
 
     def get_route(self):
         return self.road_route
+
+    def return_start(self):
+        return self.start_coord_a, self.start_coord_b
+
+    def return_end(self):
+        return self.end_coord_a, self.end_coord_b
 

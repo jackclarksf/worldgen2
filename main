@@ -17,10 +17,15 @@ class Game:
             print(i)
 
     def paint_map(self, choice_1):
-        blank_slate = self.world.world_coordinates()
-        for i in blank_slate:
+        #blank_slate = self.world.world_coordinates()
+        #for i in blank_slate:
+        #    a, b = i
+        #    self.bmap[b][a] = " "
+        veggies = self.world.vegetation_return()
+        for i in veggies:
             a, b = i
             self.bmap[b][a] = " "
+
         dom_land = self.world.water_return()
         for i in dom_land:
             a, b = i
@@ -53,6 +58,7 @@ class Game:
     def state_checker(self):
         self.world.city_growth()
         self.world.city_origin_rationalizer()
+        self.world.road_rationalizer()
 
     def move_cycle(self):
         self.world.scout_movement()

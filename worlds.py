@@ -2,7 +2,7 @@ __author__ = 'iamja_000'
 
 from itertools import product, starmap
 import random
-from entities import City, Scout, Road
+from entities import City, Scout, Road, Vegetation
 
 #OBJECTIVES:
 #write a city function that scans for neighbours and converts to same origin if connected
@@ -13,12 +13,14 @@ class World:
         self.cities = []
         self.scouts = []
         self.roads = []
+        self.vegetation = []
         self.x = int(x)
         self.y = int(y)
         total_squares = self.x * self.x
         water_level = random.randint(0, 10)
         print("World born with size: {} comprising of {} squares and a water level of {}".format(self.x, total_squares, water_level))
         self.water_list = self.actual_water_world(water_level)
+        self.land_generator()
         self.city_generator()
         self.scout_generator()
         self.tile_pop_dict = self.main_dictionary()
@@ -106,6 +108,16 @@ class World:
                     add_list.append(inputi)
 
 ###################################
+######## ^^ LAND STUFF ^^##########
+###################################
+    def land_generator(self):
+        land = [x for x in self.world_coordinates() if x not in self.water_return()]
+        for i in land:
+            a, b = i
+            self.vegetation.append(Vegetation(a, b))
+
+
+###################################
 ######## ^^ CITY STUFF ^^##########
 ###################################
 
@@ -149,17 +161,27 @@ class World:
             birth_ages = [30, 60, 120, 240]
             if i.age in birth_ages:
                 pos_locs = self.neighbour_move_options(a, b, 1)
-                print("City at {} {} with origin {} {} has growth of {} \n potential moves = {} ".format(a, b, c, d, i.growth, pos_locs))
-                our_move = random.choice(pos_locs)
-                x, y = our_move
-                self.scouts.append(Scout(x, y, c, d))
-                #NOT CHECKING ORIGIN EFFECTIVELY HERE
+                if len(pos_locs) > 0:
+                    print("City at {} {} with origin {} {} has growth of {} \n potential moves = {} ".format(a, b, c, d, i.growth, pos_locs))
+                    our_move = random.choice(pos_locs)
+                    x, y = our_move
+                    self.scouts.append(Scout(x, y, c, d))
+                else:
+                    print("City is crowded!")
 
     def city_origin_rationalizer(self):
         city_origin_dict = dict()
         for i in self.cities:
             city_origin_dict[i.get_location()] = i.return_city_origin()
         print("Our cities & origin: {}".format(city_origin_dict))
+
+    def road_rationalizer(self):
+        for i in self.roads:
+            print("Road start and end point is {} and {}".format(i.return_start(), i.return_end()))
+            print("Road routes: {}".format(i.road_route))
+            #IF STAERT OR END POINT IS SAME THEN PERFORM AN OPERATION
+
+
 
 
 
@@ -391,6 +413,13 @@ class World:
             loc = i.get_location()
             city_locs.append(loc)
         return city_locs
+
+    def vegetation_return(self):
+        our_veggies = []
+        for i in self.vegetation:
+            loc = i.return_location()
+            our_veggies.append(loc)
+        return our_veggies
 
     def water_return(self):
         return self.water_list
