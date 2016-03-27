@@ -39,6 +39,12 @@ class Game:
         for i in city_loc:
             a, b = i
             self.bmap[b][a] = "C"
+        road_loc = self.world.roads_return()
+        for i in road_loc:
+            a, b = i
+            self.bmap[b][a] = "R"
+
+        print("Our state. On screen = {} scouts, {} cities".format(len(scout_loc),len(city_loc)))
 
     def state_checker(self):
         self.world.city_growth()
@@ -64,16 +70,16 @@ class Game:
 game_world = Game()
 
 #while True:
-while game_world.tick < 350:
+while game_world.tick < 150:
     game_world.state_checker()
     game_world.paint_map(land1)
     game_world.base_map()
     game_world.move_cycle()
+    #game_world.world.coordinate_telemetry(game_world.tick)
     game_world.auto_tick()
     #game_world.tick_forward()
 
 
 #OBSERVATIONS
-#1) LONELINESS ISN'T WORKING
-#2) NEED BETTER TELEMETRY
+#2) NOW WE NEED TO START SCRAPING OUT TELEMETRY PROPERLY
 

@@ -2,7 +2,7 @@ __author__ = 'iamja_000'
 
 from itertools import product, starmap
 import random
-from entities import City, Scout
+from entities import City, Scout, Road
 
 #OBJECTIVES:
 #write a city function that scans for neighbours and converts to same origin if connected
@@ -12,6 +12,7 @@ class World:
     def __init__(self, x, y):
         self.cities = []
         self.scouts = []
+        self.roads = []
         self.x = int(x)
         self.y = int(y)
         total_squares = self.x * self.x
@@ -20,21 +21,12 @@ class World:
         self.water_list = self.actual_water_world(water_level)
         self.city_generator()
         self.scout_generator()
-
-    def water_return(self):
-        return self.water_list
+        self.tile_pop_dict = self.main_dictionary()
+        print(self.tile_pop_dict)
 
     def world_coordinates(self):
         w_coord = list(product(range(self.x), range(self.y)))
         return w_coord
-
-    def city_return(self):
-        city_locs = []
-        for i in self.cities:
-            loc = i.get_location()
-            city_locs.append(loc)
-        return city_locs
-
 
     def get_neighbours_specifiable(self, x_coord, y_coord, radius):
         r_list = []
@@ -182,6 +174,7 @@ class World:
     def scout_movement(self):
         for i in self.scouts:
             a, b = i.get_location()
+            our_hits = i.hit_rate()
             scout_origa, scout_origb = i.return_origin()
             scout_orig = i.return_origin()
             pos_moves = self.neighbour_move_options(a, b, 1)
@@ -198,10 +191,17 @@ class World:
                         print("This city at {} has origin {} {}".format(r, origina, originb))
                         self.cities.append(City(a, b, origina, originb))
                         i.add_growth()
+                        self.road_constructor(a, b, scout_origa, scout_origb)
+                        #THIS IS WHERE WE CALL THE ROAD CREATOR FUNCTION
+
+            elif our_hits > 50:
+                print("We've been talking aimless for too long with our {} hits".format(our_hits))
+                print("Too aimless, killing scout at position {} {}".format(a, b))
+                self.scouts.remove(i)
 
 #THIS MOVEMENT LOOP IS A BIT FUCKED I THINK
             elif len(pos_moves) > 0:
-                our_hits = i.hit_rate()
+#                our_hits = i.hit_rate()
                 if our_hits > 10:
                     if len(self.neighbour_type_check_return(a, b, 3, other_cities)) > 0:
                         locations = self.neighbour_type_check_return(a, b, 3, other_cities)
@@ -234,7 +234,6 @@ class World:
                 else:
                     i.add_hit_rate()
 
-
                 move = random.choice(pos_moves)
                 print("Should move scout {} {} with hits {} to move {}".format(a, b, our_hits, move))
                 c, d = move
@@ -242,9 +241,9 @@ class World:
                 i.y = d
                 i.paths_taken.append(move)
 
-
             else:
                 print("Out of moves!")
+                #DEBATABLE AS TO WHETHER WE NEED THIS RATHER THAN JUST A STRAIGHT KILL FUNCTION
                 i.more_lonely()
                 if i.lonely > 10:
                     print("Too lonely, killing scout at position {} {}".format(a, b))
@@ -252,10 +251,60 @@ class World:
 
 #################^^^^ THERE'S SOME PRETTY UGLY STUFF GOING ON IN THIS LOOP
 
+###################################
+#########ROADBUILDING#######
+###################################
+#function that takes in a city and a scout origin
+#works out a line between them that skirts around water
 
+
+    def road_constructor(self, city_coord_a, city_coord_b, origin_coord_a, origin_coord_b):
+        road_path = []
+        print("Attempting to draw road between {} {} and origin {} {}".format(city_coord_a, city_coord_b, origin_coord_a, origin_coord_b))
+        dummy_city_a = city_coord_a
+        dummy_city_b = city_coord_b
+        dummy_origin_a = origin_coord_a
+        dummy_origin_b = origin_coord_b
+        a_diff = dummy_city_a - dummy_origin_a
+        b_diff = dummy_city_b - dummy_origin_b
+        print("Our diffs are X {} and Y {}".format(a_diff, b_diff))
+        abs_a_diff = abs(dummy_city_a - dummy_origin_a)
+        abs_b_diff = abs(dummy_city_b - dummy_origin_b)
+        print("our abs diff x {} and y {}".format(abs_a_diff, abs_b_diff))
+        while abs_a_diff > 0:
+            calc_options = [-1, 1]
+            dummy_city_a += random.choice(calc_options)
+            new_diff = abs(dummy_city_a - dummy_origin_a)
+            if new_diff < abs_a_diff:
+                print("A 'A' Diff success")
+                combined_a = dummy_city_a, dummy_city_b
+                road_path.append(combined_a)
+                abs_a_diff = new_diff
+
+        while abs_b_diff > 0:
+            calc_options = [-1, 1]
+            dummy_city_b += random.choice(calc_options)
+            new_diff = abs(dummy_city_b - dummy_origin_b)
+            if new_diff < abs_b_diff:
+                print("A 'B' Diff success")
+                combined_b = dummy_city_a, dummy_city_b
+                road_path.append(combined_b)
+                abs_b_diff = new_diff
+
+        print("R path: {}".format(road_path))
+        seeker_coordinate = origin_coord_a, origin_coord_b
+        city_coordinate = city_coord_a, city_coord_b
+        if seeker_coordinate in road_path:
+            print("Houston, we may have found it!")
+            road_path.remove(seeker_coordinate)
+
+            self.roads.append(Road(city_coordinate, seeker_coordinate, road_path))
+
+        #create a road entity
+        #draw the road entity on a screen
 
 ###################################
-#### ^^ NEIGHBOURS AND CHUMS ^^####
+#####NEIGHBOURS AND CHUMS#####
 ###################################
 
                 ####THIS WHOLE SECTION CAN BE SLIMMED DOWN, I THINK ###
@@ -324,8 +373,70 @@ class World:
 
         return our_path_list
 
-#####################################
+    def city_return(self):
+        city_locs = []
+        for i in self.cities:
+            loc = i.get_location()
+            city_locs.append(loc)
+        return city_locs
 
+    def water_return(self):
+        return self.water_list
+
+    def roads_return(self):
+        roads_to_return = []
+        for i in self.roads:
+            r_path = i.get_route()
+            roads_to_return.extend(r_path)
+        return roads_to_return
+
+######################################
+#########TELEMETRY OUTPUT#############
+######################################
+
+    def coordinate_telemetry(self, tick_number):
+        our_cities = self.city_return()
+        our_paths = self.path_return()
+        our_scouts = self.scout_return()
+        our_water = self.water_return()
+        print("At tick number: {} \n Water: {} \n Scouts: {} \n Paths: {} \n Cities: {}".format(tick_number, our_water, our_scouts, our_paths, our_cities))
+        self.update_dictionary(our_paths, our_scouts)
+        print("Dictionary now: {}".format(self.tile_pop_dict))
+        #NEXT STEP: WRITE THIS OUT TO A TEXT FILE
+        city_dictionary = self.city_dictionary()
+        print("Our cities are now: {}".format(city_dictionary))
+
+    #FUNCTION COUNTS INSTANCES OF SCOUTS, PATHS, IN SPECIFIC COORDINATE. INCREMENTS BY 1 IF PRESENT.
+
+
+    #THIS FUNCTION UPDATES A DICTIONARY OF CITIES AND INCREMENTS THEIR AGE
+
+    def city_age(self):
+        for i in self.cities:
+            i.add_age()
+
+    def city_dictionary(self):
+        city_dict = dict()
+        for i in self.cities:
+            location = i.get_location()
+            i.add_age()
+            city_dict[location] = i.age
+        return city_dict
+
+    def update_dictionary(self, paths, scouts):
+        for i in self.tile_pop_dict:
+            if i in paths:
+                self.tile_pop_dict[i] += 1
+            elif i in scouts:
+                self.tile_pop_dict[i] += 1
+
+    def main_dictionary(self):
+        main_dict = dict()
+        for i in self.world_coordinates():
+            main_dict[i] = 0
+        return main_dict
+
+#####################################
 
     def land_world(self, w_level):
         water_list = []

@@ -7,6 +7,7 @@ class City:
         self.x0 = a
         self.y0 = b
         self.growth = 0
+        self.age = 0
         print("CITY BORN AT X: {} Y: {} \n Origin X: {} Y: {}".format(self.x, self.y, self.x0, self.y0))
 
     def add_growth(self):
@@ -18,6 +19,9 @@ class City:
 
     def return_city_origin(self):
         return self.x0, self.y0
+
+    def add_age(self):
+        self.age += 1
 
 class Scout:
     def __init__(self, x, y, origina, originb):
@@ -50,3 +54,14 @@ class Scout:
 
     def return_origin(self):
         return self.x0, self.y0
+
+class Road:
+    def __init__(self, origination_point, termination_point, road_list):
+        self.road_route = road_list
+        self.start_coord_a, self.start_coord_b = origination_point
+        self.end_coord_a, self.end_coord_b = termination_point
+        print("Road born with origination: {} and termination {} and path of {}".format(origination_point, termination_point, road_list))
+
+    def get_route(self):
+        return self.road_route
+

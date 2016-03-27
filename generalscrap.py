@@ -24,6 +24,18 @@ print(coord)
 coord.append(product(roota-1, rootb-1))
 print(coord)
 
+
+def road_constructor(city_coord_a, city_coord_b, origin_coord_a, origin_coord_b):
+    road_path = []
+    print("Attempting to draw road between {} {} and origin {} {}".format(city_coord_a, city_coord_b, origin_coord_a, origin_coord_b))
+    dummy_city_a = city_coord_a
+    dummy_city_b = city_coord_b
+    dummy_origin_a = origin_coord_a
+    dummy_origin_b = origin_coord_b
+    a_diff = dummy_city_a - dummy_origin_a
+    b_diff = dummy_city_b - dummy_origin_b
+    print("Our diffs are X {} and Y {}".format(a_diff, b_diff))
+
 class World:
     def __init__(self, x, y):
         self.x = int(x)
