@@ -175,7 +175,7 @@ class World:
             city_origin_dict[i.get_location()] = i.return_city_origin()
         print("Our cities & origin: {}".format(city_origin_dict))
 
-    def road_rationalizer(self):
+    def road_rationalizer2(self):
         our_length = len(self.roads)
         our_length_range = list(range(our_length))
         catchall_road = dict()
@@ -192,6 +192,24 @@ class World:
                     print("Our similarity: {}".format(similarity_checker))
                     if len(similarity_checker) > 0:
                         print("Something similar, we should do something here.")
+                        self.roads.remove(self.roads[i+1])
+                        self.roads.remove(self.roads[i])
+                        combined_list = []
+                        combined_list.extend(the_route)
+                        combined_list.extend(adjacent_route)
+                        print("Our combined list we're trying to extend is: {}".format(combined_list))
+        print(catchall_road)
+        #####RIGHT SORTA IDEA BUT WRONG IMPLEMENTATION. DO WE NEED TO USE A RECURSIVE FUNCTION?
+
+    def road_rationalizer(self):
+        our_length = len(self.roads)
+        our_length_range = list(range(our_length))
+        catchall_road = dict()
+        count = 0
+        print("Catchall road")
+        for i in self.roads:
+            catchall_road[count] = i.return_start() + i.return_end()
+            count += 1
         print(catchall_road)
 
 
