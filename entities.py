@@ -88,3 +88,11 @@ class Road:
     def return_end(self):
         return self.end_coord_a, self.end_coord_b
 
+class MetaRoad:
+    def __init__(self, starts_points, termination_points, road_list):
+        self.starts = starts_points
+        self.ends = termination_points
+        self.road_paths = road_list
+        print("HULK ROAD BORN WITH ORIG POINTS {} AND TERM POINTS {} AND TOTAL ROUTE {}".format(starts_points, termination_points, road_list))
+
+

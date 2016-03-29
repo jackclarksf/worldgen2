@@ -2,7 +2,7 @@ __author__ = 'iamja_000'
 
 from itertools import product, starmap
 import random
-from entities import City, Scout, Road, Vegetation
+from entities import City, Scout, Road, MetaRoad, Vegetation
 
 #OBJECTIVES:
 #write a city function that scans for neighbours and converts to same origin if connected
@@ -176,10 +176,28 @@ class World:
         print("Our cities & origin: {}".format(city_origin_dict))
 
     def road_rationalizer(self):
-        for i in self.roads:
-            print("Road start and end point is {} and {}".format(i.return_start(), i.return_end()))
-            print("Road routes: {}".format(i.road_route))
-            #IF STAERT OR END POINT IS SAME THEN PERFORM AN OPERATION
+        our_length = len(self.roads)
+        our_length_range = list(range(our_length))
+        catchall_road = dict()
+        if our_length > 1:
+            print("Roads = {} with range {}".format(our_length, our_length_range))
+            for i in our_length_range:
+                the_route = self.roads[i].get_route()
+                print("The route: {}".format(the_route))
+                catchall_road[i] = the_route
+                if i < our_length-1:
+                    adjacent_route = self.roads[i+1].get_route()
+                    print("Adjacent route: {}".format(adjacent_route))
+                    similarity_checker = set(the_route).intersection(adjacent_route)
+                    print("Our similarity: {}".format(similarity_checker))
+                    if len(similarity_checker) > 0:
+                        print("Something similar, we should do something here.")
+        print(catchall_road)
+
+
+
+
+
 
 
 
