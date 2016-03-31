@@ -205,19 +205,19 @@ class World:
         our_length = len(self.roads)
         our_length_range = list(range(our_length))
         catchall_road = dict()
+        catchall_city = dict()
         count = 0
         print("Catchall road")
         for i in self.roads:
-            catchall_road[count] = i.return_start() + i.return_end()
+            catchall_road[count] = i.return_end()
             count += 1
         print(catchall_road)
 
-
-
-
-
-
-
+        c_count = 0
+        for j in self.cities:
+            catchall_city[c_count] = j.return_city_origin()
+            c_count += 1
+        print(catchall_city)
 
 
 
@@ -267,6 +267,7 @@ class World:
                         print("This city at {} has origin {} {}".format(r, origina, originb))
                         self.cities.append(City(a, b, origina, originb))
                         i.add_growth()
+                        #THIS IS THE POINT WHERE WE NEED TO ADD THE ORIGIN
                         self.road_constructor(a, b, scout_origa, scout_origb)
                         #THIS IS WHERE WE CALL THE ROAD CREATOR FUNCTION
 
@@ -370,6 +371,7 @@ class World:
         if seeker_coordinate in road_path:
             road_path.remove(seeker_coordinate)
 
+            #THINK WE NEED TO APPEND ORIGIN COORD
             self.roads.append(Road(city_coordinate, seeker_coordinate, road_path))
 
 
