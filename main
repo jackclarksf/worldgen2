@@ -80,7 +80,7 @@ class Game:
 game_world = Game()
 
 #while True:
-while game_world.tick < 150:
+while game_world.tick < 200:
     game_world.state_checker()
     game_world.paint_map(land1)
     game_world.base_map()

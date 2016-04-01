@@ -228,7 +228,20 @@ class World:
             city_and_end = our_city + our_end
             if city_and_end in meta_road_list:
                 print("looks like we have a double for {}!".format(city_and_end))
+                shared_road_index = meta_road_list.index(city_and_end)
+                print(shared_road_index)
+                transplant_route = i.get_route()
+                print("Trying to transplant route {} into road {}".format(transplant_route, self.roads[shared_road_index]))
+                print("Current route: {}".format(self.roads[shared_road_index].road_route))
+                self.roads[shared_road_index].road_route.extend(transplant_route)
+                print("Route now: {}".format(self.roads[shared_road_index].road_route))
+                print("Zapping road! ROad number currently: {}".format(len(self.roads)))
+                self.roads.remove(i)
+                print("Zapped. Roads now: {}".format(len(self.roads)))
+
+            #meta_road_list.append(count)
             meta_road_list.append(city_and_end)
+            count += 1
             print("Our roads and cities: {}".format(meta_road_list))
 
 
