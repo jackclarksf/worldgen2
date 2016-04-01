@@ -73,11 +73,12 @@ class Scout:
         return self.x0, self.y0
 
 class Road:
-    def __init__(self, origination_point, termination_point, road_list):
+    def __init__(self, origination_point, termination_point, road_list, city_origin):
         self.road_route = road_list
         self.start_coord_a, self.start_coord_b = origination_point
         self.end_coord_a, self.end_coord_b = termination_point
-        print("Road born with origination: {} and termination {} and path of {}".format(origination_point, termination_point, road_list))
+        self.city_origination = city_origin
+        print("Road born at: {} with originating city {} and termination {} and path of {}".format(origination_point, city_origin, termination_point, road_list))
 
     def get_route(self):
         return self.road_route
@@ -87,6 +88,9 @@ class Road:
 
     def return_end(self):
         return self.end_coord_a, self.end_coord_b
+
+    def city_orig(self):
+        return self.city_origination
 
 class MetaRoad:
     def __init__(self, starts_points, termination_points, road_list):

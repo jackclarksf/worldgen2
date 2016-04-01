@@ -201,7 +201,7 @@ class World:
         print(catchall_road)
         #####RIGHT SORTA IDEA BUT WRONG IMPLEMENTATION. DO WE NEED TO USE A RECURSIVE FUNCTION?
 
-    def road_rationalizer(self):
+    def road_rationalizer3(self):
         our_length = len(self.roads)
         our_length_range = list(range(our_length))
         catchall_road = dict()
@@ -218,6 +218,19 @@ class World:
             catchall_city[c_count] = j.return_city_origin()
             c_count += 1
         print(catchall_city)
+
+    def road_rationalizer(self):
+        meta_road_list = []
+        count = 0
+        for i in self.roads:
+            our_city = i.city_orig()
+            our_end = i.return_end()
+            city_and_end = our_city + our_end
+            if city_and_end in meta_road_list:
+                print("looks like we have a double for {}!".format(city_and_end))
+            meta_road_list.append(city_and_end)
+            print("Our roads and cities: {}".format(meta_road_list))
+
 
 
 
@@ -268,7 +281,7 @@ class World:
                         self.cities.append(City(a, b, origina, originb))
                         i.add_growth()
                         #THIS IS THE POINT WHERE WE NEED TO ADD THE ORIGIN
-                        self.road_constructor(a, b, scout_origa, scout_origb)
+                        self.road_constructor(a, b, scout_origa, scout_origb, origina, originb)
                         #THIS IS WHERE WE CALL THE ROAD CREATOR FUNCTION
 
             elif our_hits > 50:
@@ -335,7 +348,7 @@ class World:
 #works out a line between them that skirts around water
 
 
-    def road_constructor(self, city_coord_a, city_coord_b, origin_coord_a, origin_coord_b):
+    def road_constructor(self, city_coord_a, city_coord_b, origin_coord_a, origin_coord_b, city_origin_a, city_origin_b,):
         road_path = []
         #print("Attempting to draw road between {} {} and origin {} {}".format(city_coord_a, city_coord_b, origin_coord_a, origin_coord_b))
         dummy_city_a = city_coord_a
@@ -368,11 +381,13 @@ class World:
         print("R path: {}".format(road_path))
         seeker_coordinate = origin_coord_a, origin_coord_b
         city_coordinate = city_coord_a, city_coord_b
+        city_origin_coordinate = city_origin_a, city_origin_b
         if seeker_coordinate in road_path:
             road_path.remove(seeker_coordinate)
 
             #THINK WE NEED TO APPEND ORIGIN COORD
-            self.roads.append(Road(city_coordinate, seeker_coordinate, road_path))
+            print("Creating a road at {} with origin {} and scout origin {}".format(city_coordinate, city_origin_coordinate, seeker_coordinate))
+            self.roads.append(Road(city_coordinate, seeker_coordinate, road_path, city_origin_coordinate))
 
 
 ###################################
