@@ -1,6 +1,7 @@
 __author__ = 'iamja_000'
 
 from itertools import product, starmap
+import collections
 import random
 from entities import City, Scout, Road, MetaRoad, Vegetation
 
@@ -164,7 +165,7 @@ class World:
             if i.age in birth_ages:
                 pos_locs = self.neighbour_move_options(a, b, 1)
                 if len(pos_locs) > 0:
-                    print("City at {} {} with origin {} {} has growth of {} \n potential moves = {} ".format(a, b, c, d, i.growth, pos_locs))
+                    #print("City at {} {} with origin {} {} has growth of {} \n potential moves = {} ".format(a, b, c, d, i.growth, pos_locs))
                     our_move = random.choice(pos_locs)
                     x, y = our_move
                     self.scouts.append(Scout(x, y, c, d))
@@ -175,7 +176,7 @@ class World:
         city_origin_dict = dict()
         for i in self.cities:
             city_origin_dict[i.get_location()] = i.return_city_origin()
-        print("Our cities & origin: {}".format(city_origin_dict))
+        #print("Our cities & origin: {}".format(city_origin_dict))
 
     def road_rationalizer2(self):
         our_length = len(self.roads)
@@ -229,22 +230,33 @@ class World:
             our_end = i.return_end()
             city_and_end = our_city + our_end
             if city_and_end in meta_road_list:
-                print("looks like we have a double for {}!".format(city_and_end))
+                #print("looks like we have a double for {}!".format(city_and_end))
                 shared_road_index = meta_road_list.index(city_and_end)
                 print(shared_road_index)
                 transplant_route = i.get_route()
-                print("Trying to transplant route {} into road {}".format(transplant_route, self.roads[shared_road_index]))
-                print("Current route: {}".format(self.roads[shared_road_index].road_route))
+                #print("Trying to transplant route {} into road {}".format(transplant_route, self.roads[shared_road_index]))
+                #print("Current route: {}".format(self.roads[shared_road_index].road_route))
                 self.roads[shared_road_index].road_route.extend(transplant_route)
-                print("Route now: {}".format(self.roads[shared_road_index].road_route))
-                print("Zapping road! ROad number currently: {}".format(len(self.roads)))
+                #print("Route now: {}".format(self.roads[shared_road_index].road_route))
+                #print("Zapping road! ROad number currently: {}".format(len(self.roads)))
                 self.roads.remove(i)
-                print("Zapped. Roads now: {}".format(len(self.roads)))
+                #print("Zapped. Roads now: {}".format(len(self.roads)))
 
             #meta_road_list.append(count)
             meta_road_list.append(city_and_end)
             count += 1
-            print("Our roads and cities: {}".format(meta_road_list))
+            #print("Our roads and cities: {}".format(meta_road_list))
+
+    def road_route_rationalizer(self):
+        for i in self.roads:
+            our_route = i.get_route()
+            duplicate_list = [item for item, count in collections.Counter(our_route).items() if count > 1]
+            if len(duplicate_list) > 0:
+                for i in duplicate_list:
+                    our_route.remove(i)
+                
+
+
 
 
 
@@ -393,7 +405,7 @@ class World:
                 road_path.append(combined_b)
                 abs_b_diff = new_diff
 
-        print("R path: {}".format(road_path))
+        #print("R path: {}".format(road_path))
         seeker_coordinate = origin_coord_a, origin_coord_b
         city_coordinate = city_coord_a, city_coord_b
         city_origin_coordinate = city_origin_a, city_origin_b

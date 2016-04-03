@@ -59,6 +59,7 @@ class Game:
         self.world.city_growth()
         self.world.city_origin_rationalizer()
         self.world.road_rationalizer()
+        self.world.road_route_rationalizer()
 
     def move_cycle(self):
         self.world.scout_movement()

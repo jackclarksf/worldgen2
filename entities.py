@@ -49,7 +49,7 @@ class Scout:
         self.y0 = originb
         self.period_without_hit = 0
         self.lonely = 0
-        print("SCOUT BORN AT X: {} Y: {} \n Origin X: {} Y: {}".format(self.x, self.y, self.x0, self.y0))
+        #print("SCOUT BORN AT X: {} Y: {} \n Origin X: {} Y: {}".format(self.x, self.y, self.x0, self.y0))
 
     def get_location(self):
         return self.x, self.y
