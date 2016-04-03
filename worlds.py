@@ -4,6 +4,8 @@ from itertools import product, starmap
 import random
 from entities import City, Scout, Road, MetaRoad, Vegetation
 
+############3LINUX TEST!!!!! ^ ____ ^
+
 #OBJECTIVES:
 #write a city function that scans for neighbours and converts to same origin if connected
 #probably implement by adding age to city. The oldest city propagates origin to others connected to it.
