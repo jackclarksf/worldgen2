@@ -144,7 +144,6 @@ class World:
             city_quantity += 1
         print("Our cities: {}".format(self.city_return()))
 
-#PROLIFERATING TOO MANY CITIES. NEED TO ADD A DECAY FUNCTION.
     def city_growth(self):
         for i in self.cities:
             a, b = i.get_location()
@@ -161,8 +160,7 @@ class World:
                 if i.growth < 11:
                     i.add_growth()
             i.add_age()
-            birth_ages = [30, 60, 120, 240]
-            if i.age in birth_ages:
+            if i.age % 40 == 0:
                 pos_locs = self.neighbour_move_options(a, b, 1)
                 if len(pos_locs) > 0:
                     #print("City at {} {} with origin {} {} has growth of {} \n potential moves = {} ".format(a, b, c, d, i.growth, pos_locs))
@@ -254,7 +252,7 @@ class World:
             if len(duplicate_list) > 0:
                 for i in duplicate_list:
                     our_route.remove(i)
-                
+
 
 
 
