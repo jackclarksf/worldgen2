@@ -119,6 +119,45 @@ class World:
             a, b = i
             self.vegetation.append(Vegetation(a, b))
 
+    def land_energy_growth(self):
+        for i in self.vegetation:
+            i.increase_vitality()
+
+    def land_energy_road_squash(self):
+        our_roads = self.path_return()
+        for i in self.vegetation:
+            location = i.return_location()
+            if location in our_roads:
+                i.vitality = 0
+
+    def total_land_energy(self):
+        energy = 0
+        for i in self.vegetation:
+            energy += i.vitality
+        print("Total energy is {} across {}".format(energy, len(self.vegetation)))
+
+
+###################################
+######## ^^ CITY ENERGY STUFF ^^###
+###################################
+
+    def city_energy_growth(self):
+        for i in self.cities:
+            our_location = i.get_location()
+            our_loc_x, our_loc_y = our_location
+            neighbours_to_check = self.get_neighbours_specifiable(our_loc_x, our_loc_y, 1)
+            for j in self.vegetation:
+                our_veg_loc = j.return_location()
+                if our_veg_loc in neighbours_to_check:
+                    if j.vitality < 1:
+                        print("Slurped it dry,m'lord")
+                    else:
+                        j.decrease_vitality()
+                        i.energy += 1
+            print("City at {} now has energy {}".format(our_location, i.energy))
+
+
+
 
 ###################################
 ######## ^^ CITY STUFF ^^##########
@@ -176,50 +215,6 @@ class World:
             city_origin_dict[i.get_location()] = i.return_city_origin()
         #print("Our cities & origin: {}".format(city_origin_dict))
 
-    def road_rationalizer2(self):
-        our_length = len(self.roads)
-        our_length_range = list(range(our_length))
-        catchall_road = dict()
-        if our_length > 1:
-            print("Roads = {} with range {}".format(our_length, our_length_range))
-            for i in our_length_range:
-                the_route = self.roads[i].get_route()
-                print("The route: {}".format(the_route))
-                catchall_road[i] = the_route
-                if i < our_length-1:
-                    adjacent_route = self.roads[i+1].get_route()
-                    print("Adjacent route: {}".format(adjacent_route))
-                    similarity_checker = set(the_route).intersection(adjacent_route)
-                    print("Our similarity: {}".format(similarity_checker))
-                    if len(similarity_checker) > 0:
-                        print("Something similar, we should do something here.")
-                        self.roads.remove(self.roads[i+1])
-                        self.roads.remove(self.roads[i])
-                        combined_list = []
-                        combined_list.extend(the_route)
-                        combined_list.extend(adjacent_route)
-                        print("Our combined list we're trying to extend is: {}".format(combined_list))
-        print(catchall_road)
-        #####RIGHT SORTA IDEA BUT WRONG IMPLEMENTATION. DO WE NEED TO USE A RECURSIVE FUNCTION?
-
-    def road_rationalizer3(self):
-        our_length = len(self.roads)
-        our_length_range = list(range(our_length))
-        catchall_road = dict()
-        catchall_city = dict()
-        count = 0
-        print("Catchall road")
-        for i in self.roads:
-            catchall_road[count] = i.return_end()
-            count += 1
-        print(catchall_road)
-
-        c_count = 0
-        for j in self.cities:
-            catchall_city[c_count] = j.return_city_origin()
-            c_count += 1
-        print(catchall_city)
-
     def road_rationalizer(self):
         meta_road_list = []
         count = 0
@@ -228,22 +223,14 @@ class World:
             our_end = i.return_end()
             city_and_end = our_city + our_end
             if city_and_end in meta_road_list:
-                #print("looks like we have a double for {}!".format(city_and_end))
                 shared_road_index = meta_road_list.index(city_and_end)
                 print(shared_road_index)
                 transplant_route = i.get_route()
-                #print("Trying to transplant route {} into road {}".format(transplant_route, self.roads[shared_road_index]))
-                #print("Current route: {}".format(self.roads[shared_road_index].road_route))
                 self.roads[shared_road_index].road_route.extend(transplant_route)
-                #print("Route now: {}".format(self.roads[shared_road_index].road_route))
-                #print("Zapping road! ROad number currently: {}".format(len(self.roads)))
                 self.roads.remove(i)
-                #print("Zapped. Roads now: {}".format(len(self.roads)))
 
-            #meta_road_list.append(count)
             meta_road_list.append(city_and_end)
             count += 1
-            #print("Our roads and cities: {}".format(meta_road_list))
 
     def road_route_rationalizer(self):
         for i in self.roads:
@@ -252,14 +239,6 @@ class World:
             if len(duplicate_list) > 0:
                 for i in duplicate_list:
                     our_route.remove(i)
-
-
-
-
-
-
-
-
 
 
 ###################################

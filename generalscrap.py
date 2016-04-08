@@ -148,3 +148,50 @@ class Forest(World):
     def __init__(self, x, y):
         World.__init__(self, x, y)
         print("Desert world born! size {} comprising of {} squares".format(self.x, self.x*self.x))
+
+
+
+
+    def road_rationalizer2(self):
+        our_length = len(self.roads)
+        our_length_range = list(range(our_length))
+        catchall_road = dict()
+        if our_length > 1:
+            print("Roads = {} with range {}".format(our_length, our_length_range))
+            for i in our_length_range:
+                the_route = self.roads[i].get_route()
+                print("The route: {}".format(the_route))
+                catchall_road[i] = the_route
+                if i < our_length-1:
+                    adjacent_route = self.roads[i+1].get_route()
+                    print("Adjacent route: {}".format(adjacent_route))
+                    similarity_checker = set(the_route).intersection(adjacent_route)
+                    print("Our similarity: {}".format(similarity_checker))
+                    if len(similarity_checker) > 0:
+                        print("Something similar, we should do something here.")
+                        self.roads.remove(self.roads[i+1])
+                        self.roads.remove(self.roads[i])
+                        combined_list = []
+                        combined_list.extend(the_route)
+                        combined_list.extend(adjacent_route)
+                        print("Our combined list we're trying to extend is: {}".format(combined_list))
+        print(catchall_road)
+        #####RIGHT SORTA IDEA BUT WRONG IMPLEMENTATION. DO WE NEED TO USE A RECURSIVE FUNCTION?
+
+    def road_rationalizer3(self):
+        our_length = len(self.roads)
+        our_length_range = list(range(our_length))
+        catchall_road = dict()
+        catchall_city = dict()
+        count = 0
+        print("Catchall road")
+        for i in self.roads:
+            catchall_road[count] = i.return_end()
+            count += 1
+        print(catchall_road)
+
+                c_count = 0
+        for j in self.cities:
+            catchall_city[c_count] = j.return_city_origin()
+            c_count += 1
+        print(catchall_city)

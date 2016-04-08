@@ -60,6 +60,12 @@ class Game:
         self.world.city_origin_rationalizer()
         self.world.road_rationalizer()
         self.world.road_route_rationalizer()
+        self.world.land_energy_growth()
+        self.world.land_energy_road_squash()
+        self.world.total_land_energy()
+
+    def energy_fluctuations(self):
+        self.world.city_energy_growth()
 
     def move_cycle(self):
         self.world.scout_movement()
@@ -83,6 +89,7 @@ game_world = Game()
 #while True:
 while game_world.tick < 200:
     game_world.state_checker()
+    game_world.energy_fluctuations()
     game_world.paint_map(land1)
     game_world.base_map()
     game_world.move_cycle()

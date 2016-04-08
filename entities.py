@@ -25,6 +25,7 @@ class City:
         self.y0 = b
         self.growth = 0
         self.age = 0
+        self.energy = 0
         print("CITY BORN AT X: {} Y: {} \n Origin X: {} Y: {}".format(self.x, self.y, self.x0, self.y0))
 
     def add_growth(self):
