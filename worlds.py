@@ -369,17 +369,21 @@ class World:
 
     def road_constructor_2(self, loc_a, loc_b, r_origin_a, r_origin_b, c_origin_a, c_origin_b):
 
-        def abs_diff_checker(input_a, input_b):
+        def abs_diff_checker(input_a, input_b, r_a, r_b):
             road_path = []
             distance_tuple = [input_a, input_b]
             target_distance = [0, 0]
+            actual_distance = [r_a, r_b]
             while distance_tuple > target_distance:
                 calc_options = [-1, 1]
                 tuple_option = [0, 1]
                 our_option = random.choice(tuple_option)
                 distance_tuple[our_option] += random.choice(calc_options)
-                new_distance = abs(tuple(distance_tuple) - tuple(target_distance))
-                if new_distance < tuple(distance_tuple):
+                new_distance = [0, 0]
+                new_distance[0] = abs(distance_tuple[0] - actual_distance[0])
+                new_distance[1] = abs(distance_tuple[1] - actual_distance[1])
+                print("Our tuples are now new distance {} and distance tuple {}".format(new_distance, distance_tuple))
+                if tuple(new_distance) < tuple(distance_tuple):
                     road_path.append(new_distance)
                     distance_tuple = new_distance
             return road_path
@@ -387,7 +391,7 @@ class World:
         abs_a_diff = abs(loc_a - r_origin_a)
         abs_b_diff = abs(loc_b - r_origin_b)
 
-        candidate_path = abs_diff_checker(abs_a_diff, abs_b_diff)
+        candidate_path = abs_diff_checker(abs_a_diff, abs_b_diff, r_origin_a, r_origin_b)
         print("Our candidate path is: {}".format(candidate_path))
         seeker_coordinate = r_origin_a, r_origin_b
         city_coordinate = loc_a, loc_b
