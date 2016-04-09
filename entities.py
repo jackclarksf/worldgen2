@@ -12,7 +12,7 @@ class Vegetation:
     def decrease_vitality(self):
         self.vitality -= 1
 
-    def return_location(self):
+    def get_location(self):
         return self.x, self.y
 
 
@@ -26,11 +26,11 @@ class City:
         self.growth = 0
         self.age = 0
         self.energy = 0
-        print("CITY BORN AT X: {} Y: {} \n Origin X: {} Y: {}".format(self.x, self.y, self.x0, self.y0))
+        #print("CITY BORN AT X: {} Y: {} \n Origin X: {} Y: {}".format(self.x, self.y, self.x0, self.y0))
 
     def add_growth(self):
         self.growth += 1
-        print("ADDED GROWTH to city at {} {} with origin {} {}. Growth now {}".format(self.x, self.y, self.x0, self.y0, self.growth))
+        #print("ADDED GROWTH to city at {} {} with origin {} {}. Growth now {}".format(self.x, self.y, self.x0, self.y0, self.growth))
 
     def get_location(self):
         return self.x, self.y
@@ -79,7 +79,7 @@ class Road:
         self.start_coord_a, self.start_coord_b = origination_point
         self.end_coord_a, self.end_coord_b = termination_point
         self.city_origination = city_origin
-        print("Road born at: {} with originating city {} and termination {} and path of {}".format(origination_point, city_origin, termination_point, road_list))
+        #print("Road born at: {} with originating city {} and termination {} and path of {}".format(origination_point, city_origin, termination_point, road_list))
 
     def get_route(self):
         return self.road_route
@@ -98,6 +98,6 @@ class MetaRoad:
         self.starts = starts_points
         self.ends = termination_points
         self.road_paths = road_list
-        print("HULK ROAD BORN WITH ORIG POINTS {} AND TERM POINTS {} AND TOTAL ROUTE {}".format(starts_points, termination_points, road_list))
+        #print("HULK ROAD BORN WITH ORIG POINTS {} AND TERM POINTS {} AND TOTAL ROUTE {}".format(starts_points, termination_points, road_list))
 
 

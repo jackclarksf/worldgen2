@@ -5,7 +5,6 @@ import collections
 import random
 from entities import City, Scout, Road, MetaRoad, Vegetation
 
-############3LINUX TEST!!!!! ^ ____ ^
 
 #OBJECTIVES:
 #write a city function that scans for neighbours and converts to same origin if connected
@@ -48,8 +47,7 @@ class World:
         water_list = []
         our_coordinates = self.world_coordinates()
         remaining_list = [x for x in our_coordinates if x not in water_list]
-        extra_list = self.island_function(remaining_list)
-        water_list = extra_list + water_list
+        water_list = self.island_function(remaining_list) + water_list
         sug_frequency = round(self.x)/3
         self.space_creator_length((round(self.x/3))*2, round(self.y/2), sug_frequency, water_list)
         for i in our_coordinates:
@@ -110,6 +108,8 @@ class World:
                 if water_stat > 7:
                     add_list.append(inputi)
 
+###########^^^ THIS WHOLE SECTION WORKS BUT CAN BE REDONE FOR READIBILITY########################
+
 ###################################
 ######## ^^ LAND STUFF ^^##########
 ###################################
@@ -126,7 +126,7 @@ class World:
     def land_energy_road_squash(self):
         our_roads = self.path_return()
         for i in self.vegetation:
-            location = i.return_location()
+            location = i.get_location()
             if location in our_roads:
                 i.vitality = 0
 
@@ -134,7 +134,7 @@ class World:
         energy = 0
         for i in self.vegetation:
             energy += i.vitality
-        print("Total energy is {} across {}".format(energy, len(self.vegetation)))
+        #print("Total energy is {} across {}".format(energy, len(self.vegetation)))
 
 
 ###################################
@@ -147,16 +147,12 @@ class World:
             our_loc_x, our_loc_y = our_location
             neighbours_to_check = self.get_neighbours_specifiable(our_loc_x, our_loc_y, 1)
             for j in self.vegetation:
-                our_veg_loc = j.return_location()
+                our_veg_loc = j.get_location()
                 if our_veg_loc in neighbours_to_check:
-                    if j.vitality < 1:
-                        print("Slurped it dry,m'lord")
-                    else:
+                    if j.vitality > 1:
                         j.decrease_vitality()
                         i.energy += 1
-            print("City at {} now has energy {}".format(our_location, i.energy))
-
-
+            #print("City at {} now has energy {}".format(our_location, i.energy))
 
 
 ###################################
@@ -167,21 +163,19 @@ class World:
         free = [x for x in self.world_coordinates() if x not in self.water_return()]
         city_number = round(self.x/3)
         city_quantity = 0
-        #THIS LOOP CAN DEFINITELY BE NEATENED UP...
         while city_quantity < city_number:
             city_coord = random.choice(free)
             a, b = city_coord
             while len(self.neighbour_type_check_return(a, b, 1, self.water_return())) > 1:
-               #PRETTY SURE THIS ISN'T WORKING PROPERLY. NEED BETTER/DIFFERENT TELEMETRY
                 city_coord = random.choice(free)
                 a, b = city_coord
-            while len(self.neighbour_type_check_return(a, b, 2, self.city_return())) > 0:
+            while len(self.neighbour_type_check_return(a, b, 3, self.return_locations_for_object_group(self.cities))) > 0:
                 city_coord = random.choice(free)
                 a, b = city_coord
 
             self.cities.append(City(a, b, a, b))
             city_quantity += 1
-        print("Our cities: {}".format(self.city_return()))
+        print("Our cities: {}".format(self.return_locations_for_object_group(self.cities)))
 
     def city_growth(self):
         for i in self.cities:
@@ -190,7 +184,6 @@ class World:
             if i.growth > 10:
                 pos_locs = self.neighbour_move_options(a, b, 1)
                 if len(pos_locs) > 0:
-                    #print("City at {} {} with origin {} {} has growth of {} \n potential moves = {} ".format(a, b, c, d, i.growth, pos_locs))
                     our_move = random.choice(pos_locs)
                     x, y = our_move
                     self.scouts.append(Scout(x, y, c, d))
@@ -213,8 +206,8 @@ class World:
         city_origin_dict = dict()
         for i in self.cities:
             city_origin_dict[i.get_location()] = i.return_city_origin()
-        #print("Our cities & origin: {}".format(city_origin_dict))
 
+#WE DO NOT UNDERSTAND THIS COMPONENT OF IT
     def road_rationalizer(self):
         meta_road_list = []
         count = 0
@@ -224,7 +217,6 @@ class World:
             city_and_end = our_city + our_end
             if city_and_end in meta_road_list:
                 shared_road_index = meta_road_list.index(city_and_end)
-                print(shared_road_index)
                 transplant_route = i.get_route()
                 self.roads[shared_road_index].road_route.extend(transplant_route)
                 self.roads.remove(i)
@@ -238,6 +230,7 @@ class World:
             duplicate_list = [item for item, count in collections.Counter(our_route).items() if count > 1]
             if len(duplicate_list) > 0:
                 for i in duplicate_list:
+                    #print("Killing a road")
                     our_route.remove(i)
 
 
@@ -257,8 +250,6 @@ class World:
                 candidate_loc = random.choice(free_neighbours)
                 c, d = candidate_loc
                 self.scouts.append(Scout(c, d, x0, y0))
-            else:
-                print("Looks like we don't have any spare neighbours.")
 
         for i in self.scouts:
             i.paths_taken.append(i.get_location())
@@ -275,27 +266,18 @@ class World:
 
             if len(self.neighbour_type_check_return(a, b, 1, other_cities)) > 0:
                 our_decision = random.choice(self.neighbour_type_check_return(a, b, 1, other_cities))
-                #print("Scout at ab {} {} with origination {} {} is gonna join with city at {}".format(a, b, scout_origa, scout_origb, our_decision))
                 self.scouts.remove(i)
                 for i in self.cities:
-                    r = i.get_location()
-                    if our_decision == r:
+                    if our_decision == i.get_location():
                         origina, originb = i.return_city_origin()
-                        print("This city at {} has origin {} {}".format(r, origina, originb))
                         self.cities.append(City(a, b, origina, originb))
                         i.add_growth()
-                        #THIS IS THE POINT WHERE WE NEED TO ADD THE ORIGIN
                         self.road_constructor(a, b, scout_origa, scout_origb, origina, originb)
-                        #THIS IS WHERE WE CALL THE ROAD CREATOR FUNCTION
 
             elif our_hits > 50:
-                #print("We've been talking aimless for too long with our {} hits".format(our_hits))
-                print("Too aimless, killing scout at position {} {}".format(a, b))
                 self.scouts.remove(i)
 
-#THIS MOVEMENT LOOP IS A BIT FUCKED I THINK
             elif len(pos_moves) > 0:
-#                our_hits = i.hit_rate()
                 if our_hits > 10:
                     if len(self.neighbour_type_check_return(a, b, 3, other_cities)) > 0:
                         locations = self.neighbour_type_check_return(a, b, 3, other_cities)
@@ -309,7 +291,7 @@ class World:
                             elif d > f:
                                 if f > b:
                                     pos_moves.remove(l)
-                        #print("Our pos moves w/ radius 3 are now: {}".format(pos_moves))
+                        ##### ^ this entire movement loop can be improved I think ^ ####
 
                 if len(self.neighbour_type_check_return(a, b, 2, other_cities)) > 0:
                     locations = self.neighbour_type_check_return(a, b, 2, other_cities)
@@ -317,19 +299,16 @@ class World:
                     c, d = chosen_location
                     for l in pos_moves:
                         e, f = l
-                        #print("Checking city {} {} against move {} {} with scout at position: {} {}".format(c, d, e, f, a, b))
                         if c > e:
                             if e > a:
                                 pos_moves.remove(l)
                         elif d > f:
                             if f > b:
                                 pos_moves.remove(l)
-                    #print("Our pos moves are now: {}".format(pos_moves))
                 else:
                     i.add_hit_rate()
 
                 move = random.choice(pos_moves)
-                #print("Should move scout {} {} with hits {} to move {}".format(a, b, our_hits, move))
                 c, d = move
                 i.x = c
                 i.y = d
@@ -337,13 +316,13 @@ class World:
 
             else:
                 print("Out of moves!")
-                #DEBATABLE AS TO WHETHER WE NEED THIS RATHER THAN JUST A STRAIGHT KILL FUNCTION
                 i.more_lonely()
                 if i.lonely > 10:
                     print("Too lonely, killing scout at position {} {}".format(a, b))
                     self.scouts.remove(i)
 
 #################^^^^ THERE'S SOME PRETTY UGLY STUFF GOING ON IN THIS LOOP
+                    #####OUR BIG LINUX TEST : )
 
 ###################################
 #########ROADBUILDING#######
@@ -390,7 +369,7 @@ class World:
             road_path.remove(seeker_coordinate)
 
             #THINK WE NEED TO APPEND ORIGIN COORD
-            print("Creating a road at {} with origin {} and scout origin {}".format(city_coordinate, city_origin_coordinate, seeker_coordinate))
+            #print("Creating a road at {} with origin {} and scout origin {}".format(city_coordinate, city_origin_coordinate, seeker_coordinate))
             self.roads.append(Road(city_coordinate, seeker_coordinate, road_path, city_origin_coordinate))
 
 
@@ -421,7 +400,7 @@ class World:
     def neighbour_move_options(self, x, y, distance_to_check):
         water_list = self.water_return()
         our_neighbours = self.get_neighbours_specifiable(x, y, distance_to_check)
-        city_locations = self.city_return()
+        city_locations = self.return_locations_for_object_group(self.cities)
         scout_locations = []
         for i in self.scouts:
             i.get_location()
@@ -447,14 +426,25 @@ class World:
         return orig_list
 
 
-#THIS IS HACKY AND WEIRD
-    def scout_return(self):
-        scouts_loc_loc = []
-        for i in self.scouts:
-            loc = i.get_location()
-            scouts_loc_loc.append(loc)
+######################################
+#########TELEMETRY OUTPUT#############
+######################################
 
-        return scouts_loc_loc
+    def return_locations_for_object_group(self, object_to_return):
+        loc_list = []
+        for i in object_to_return:
+            loc = i.get_location()
+            loc_list.append(loc)
+
+        return loc_list
+
+
+    def vegetation_return(self):
+        our_veggies = []
+        for i in self.vegetation:
+            loc = i.get_location()
+            our_veggies.append(loc)
+        return our_veggies
 
     def path_return(self):
         our_path_list = []
@@ -464,23 +454,6 @@ class World:
 
         return our_path_list
 
-    def city_return(self):
-        city_locs = []
-        for i in self.cities:
-            loc = i.get_location()
-            city_locs.append(loc)
-        return city_locs
-
-    def vegetation_return(self):
-        our_veggies = []
-        for i in self.vegetation:
-            loc = i.return_location()
-            our_veggies.append(loc)
-        return our_veggies
-
-    def water_return(self):
-        return self.water_list
-
     def roads_return(self):
         roads_to_return = []
         for i in self.roads:
@@ -488,14 +461,13 @@ class World:
             roads_to_return.extend(r_path)
         return roads_to_return
 
-######################################
-#########TELEMETRY OUTPUT#############
-######################################
+    def water_return(self):
+        return self.water_list
 
     def coordinate_telemetry(self, tick_number):
-        our_cities = self.city_return()
+        our_cities = self.return_locations_for_object_group(self.cities)
+        our_scouts = self.return_locations_for_object_group(self.scouts)
         our_paths = self.path_return()
-        our_scouts = self.scout_return()
         our_water = self.water_return()
         print("At tick number: {} \n Water: {} \n Scouts: {} \n Paths: {} \n Cities: {}".format(tick_number, our_water, our_scouts, our_paths, our_cities))
         self.update_dictionary(our_paths, our_scouts)

@@ -21,7 +21,7 @@ class Game:
         #for i in blank_slate:
         #    a, b = i
         #    self.bmap[b][a] = " "
-        veggies = self.world.vegetation_return()
+        veggies = self.world.return_locations_for_object_group(self.world.vegetation)
         for i in veggies:
             a, b = i
             self.bmap[b][a] = " "
@@ -35,12 +35,12 @@ class Game:
             a, b = i
             #print("Printing path: {} {}".format(a, b))
             self.bmap[b][a] = "X"
-        scout_loc = self.world.scout_return()
+        scout_loc = self.world.return_locations_for_object_group(self.world.scouts)
         for i in scout_loc:
             a, b = i
             #print("Printing scout: {} {}".format(a, b))
             self.bmap[b][a] = "S"
-        city_loc = self.world.city_return()
+        city_loc = self.world.return_locations_for_object_group(self.world.cities)
         for i in city_loc:
             a, b = i
             self.bmap[b][a] = "C"
@@ -53,7 +53,7 @@ class Game:
         for i in self.world.roads:
             r_list.append(i)
 
-        print("Our state. On screen = {} scouts, {} cities {} road tiles from {} roads".format(len(scout_loc),len(city_loc), len(road_loc), len(r_list)))
+        #print("Our state. On screen = {} scouts, {} cities {} road tiles from {} roads".format(len(scout_loc),len(city_loc), len(road_loc), len(r_list)))
 
     def state_checker(self):
         self.world.city_growth()
@@ -88,12 +88,13 @@ game_world = Game()
 
 #while True:
 while game_world.tick < 200:
+    print(" ")
     game_world.state_checker()
     game_world.energy_fluctuations()
     game_world.paint_map(land1)
     game_world.base_map()
     game_world.move_cycle()
-    #ame_world.world.coordinate_telemetry(game_world.tick)
+    #game_world.world.coordinate_telemetry(game_world.tick)
     game_world.auto_tick()
     #game_world.tick_forward()
 
