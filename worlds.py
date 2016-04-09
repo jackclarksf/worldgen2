@@ -272,7 +272,7 @@ class World:
                         city_origina, city_originb = i.return_city_origin()
                         self.cities.append(City(a, b, city_origina, city_originb))
                         i.add_growth()
-                        self.road_constructor(a, b, scout_origa, scout_origb, city_origina, city_originb)
+                        self.road_constructor_2(a, b, scout_origa, scout_origb, city_origina, city_originb)
 
             elif our_hits > 50:
                 self.scouts.remove(i)
@@ -368,22 +368,35 @@ class World:
             ##### ^^^^ THIS LOOP CAN DEFINITELY BE NEATENED
 
     def road_constructor_2(self, loc_a, loc_b, r_origin_a, r_origin_b, c_origin_a, c_origin_b):
-        road_path = []
 
         def abs_diff_checker(input_a, input_b):
-            distance_tuple = input_a, input_b
-            target_distance = 0, 0
+            road_path = []
+            distance_tuple = [input_a, input_b]
+            target_distance = [0, 0]
             while distance_tuple > target_distance:
                 calc_options = [-1, 1]
-                our_option = random.choice(input_a, input_b)
-                our_option += random.choice(calc_options)
-                new_distance = abs()
-                #NEED TO CHECK THIS OK 
-
-
+                tuple_option = [0, 1]
+                our_option = random.choice(tuple_option)
+                distance_tuple[our_option] += random.choice(calc_options)
+                new_distance = abs(tuple(distance_tuple) - tuple(target_distance))
+                if new_distance < tuple(distance_tuple):
+                    road_path.append(new_distance)
+                    distance_tuple = new_distance
+            return road_path
 
         abs_a_diff = abs(loc_a - r_origin_a)
         abs_b_diff = abs(loc_b - r_origin_b)
+
+        candidate_path = abs_diff_checker(abs_a_diff, abs_b_diff)
+        print("Our candidate path is: {}".format(candidate_path))
+        seeker_coordinate = r_origin_a, r_origin_b
+        city_coordinate = loc_a, loc_b
+        city_origin_coordinate = c_origin_a, c_origin_b
+        if seeker_coordinate in candidate_path:
+            candidate_path.remove(seeker_coordinate)
+            self.roads.append(Road(city_coordinate, seeker_coordinate, candidate_path, city_origin_coordinate))
+
+
 
 
 
