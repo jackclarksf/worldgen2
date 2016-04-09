@@ -269,10 +269,10 @@ class World:
                 self.scouts.remove(i)
                 for i in self.cities:
                     if our_decision == i.get_location():
-                        origina, originb = i.return_city_origin()
-                        self.cities.append(City(a, b, origina, originb))
+                        city_origina, city_originb = i.return_city_origin()
+                        self.cities.append(City(a, b, city_origina, city_originb))
                         i.add_growth()
-                        self.road_constructor(a, b, scout_origa, scout_origb, origina, originb)
+                        self.road_constructor(a, b, scout_origa, scout_origb, city_origina, city_originb)
 
             elif our_hits > 50:
                 self.scouts.remove(i)
@@ -330,7 +330,6 @@ class World:
 #function that takes in a city and a scout origin
 #works out a line between them that skirts around water
 
-
     def road_constructor(self, city_coord_a, city_coord_b, origin_coord_a, origin_coord_b, city_origin_a, city_origin_b,):
         road_path = []
         #print("Attempting to draw road between {} {} and origin {} {}".format(city_coord_a, city_coord_b, origin_coord_a, origin_coord_b))
@@ -338,11 +337,9 @@ class World:
         dummy_city_b = city_coord_b
         dummy_origin_a = origin_coord_a
         dummy_origin_b = origin_coord_b
-        a_diff = dummy_city_a - dummy_origin_a
-        b_diff = dummy_city_b - dummy_origin_b
-        #print("Our diffs are X {} and Y {}".format(a_diff, b_diff))
         abs_a_diff = abs(dummy_city_a - dummy_origin_a)
         abs_b_diff = abs(dummy_city_b - dummy_origin_b)
+
         while abs_a_diff > 0:
             calc_options = [-1, 1]
             dummy_city_a += random.choice(calc_options)
@@ -361,19 +358,36 @@ class World:
                 road_path.append(combined_b)
                 abs_b_diff = new_diff
 
-        #print("R path: {}".format(road_path))
         seeker_coordinate = origin_coord_a, origin_coord_b
         city_coordinate = city_coord_a, city_coord_b
         city_origin_coordinate = city_origin_a, city_origin_b
         if seeker_coordinate in road_path:
             road_path.remove(seeker_coordinate)
-
-            #THINK WE NEED TO APPEND ORIGIN COORD
-            #print("Creating a road at {} with origin {} and scout origin {}".format(city_coordinate, city_origin_coordinate, seeker_coordinate))
             self.roads.append(Road(city_coordinate, seeker_coordinate, road_path, city_origin_coordinate))
 
+            ##### ^^^^ THIS LOOP CAN DEFINITELY BE NEATENED
 
-###################################
+    def road_constructor_2(self, loc_a, loc_b, r_origin_a, r_origin_b, c_origin_a, c_origin_b):
+        road_path = []
+
+        def abs_diff_checker(input_a, input_b):
+            distance_tuple = input_a, input_b
+            target_distance = 0, 0
+            while distance_tuple > target_distance:
+                calc_options = [-1, 1]
+                our_option = random.choice(input_a, input_b)
+                our_option += random.choice(calc_options)
+                new_distance = abs()
+                #NEED TO CHECK THIS OK 
+
+
+
+        abs_a_diff = abs(loc_a - r_origin_a)
+        abs_b_diff = abs(loc_b - r_origin_b)
+
+
+
+            ###################################
 #####NEIGHBOURS AND CHUMS#####
 ###################################
 
