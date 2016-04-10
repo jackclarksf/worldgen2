@@ -389,6 +389,7 @@ class World:
                 our_choice = random.choice(list_option)
                 new_location[our_choice] += random.choice(calc_options)
                 print("Our new location is {}".format(new_location))
+                print("Our preserved location is: {}".format(preserved_location))
                 our_current_distance_a = abs(new_location[0] - r_origin_a)
                 our_current_distance_b = abs(new_location[1] - r_origin_b)
                 combined_distance = [our_current_distance_a, our_current_distance_b]
@@ -402,10 +403,10 @@ class World:
                     print("Feeding the new location")
                     combined_location = new_location
                 else:
-                    print("{} doesn't work so reverting to {}".format(new_location, combined_location))
+                    print("{} doesn't work so reverting to {}".format(new_location, preserved_location))
                     combined_location = combined_location
         print("Now our path is {}".format(road_path))\
-        #OUR DATAFLOW MODEL IS FUCKED UP, SON 
+        #OUR DATAFLOW MODEL IS FUCKED UP, SON
 
 
 
