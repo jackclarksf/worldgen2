@@ -272,7 +272,7 @@ class World:
                         city_origina, city_originb = i.return_city_origin()
                         self.cities.append(City(a, b, city_origina, city_originb))
                         i.add_growth()
-                        self.road_constructor_2(a, b, scout_origa, scout_origb, city_origina, city_originb)
+                        self.road_constructor_3(a, b, scout_origa, scout_origb, city_origina, city_originb)
 
             elif our_hits > 50:
                 self.scouts.remove(i)
@@ -366,6 +366,48 @@ class World:
             self.roads.append(Road(city_coordinate, seeker_coordinate, road_path, city_origin_coordinate))
 
             ##### ^^^^ THIS LOOP CAN DEFINITELY BE NEATENED
+
+    def road_constructor_3(self, loc_a, loc_b, r_origin_a, r_origin_b, c_origin_a, c_origin_b):
+        road_path = []
+        print("OK, here is our position {} {} and our origin {} {} and our city origin {} {}".format(loc_a, loc_b, r_origin_a, r_origin_b, c_origin_a, c_origin_b))
+        #WHAT WE NEED IS TO BUILD A ROUTE BETWEEN OUR LOCATION (LOC) AND SCOUT ORIGIN (R_ORIG)
+        our_current_distance_a = abs(loc_a - r_origin_a)
+        our_current_distance_b = abs(loc_b - r_origin_b)
+        combined_distance = [our_current_distance_a, our_current_distance_b]
+        combined_location = [loc_a, loc_b]
+        combined_origin = [r_origin_a, r_origin_b]
+        print("Our distance: {}".format(combined_distance))
+        while combined_distance != [0, 0]:
+            choice = input("Do you want to tick, [y]?")
+            if choice == "y":
+                prev_distance = [our_current_distance_a, our_current_distance_b]
+                preserved_location = combined_location
+                new_location = preserved_location
+                print("Attempting to close distance of {} by manipulating location {}".format(prev_distance, new_location))
+                calc_options = [-1, 1]
+                list_option = [0, 1]
+                our_choice = random.choice(list_option)
+                new_location[our_choice] += random.choice(calc_options)
+                print("Our new location is {}".format(new_location))
+                our_current_distance_a = abs(new_location[0] - r_origin_a)
+                our_current_distance_b = abs(new_location[1] - r_origin_b)
+                combined_distance = [our_current_distance_a, our_current_distance_b]
+                print("Our distance now: {}".format(combined_distance))
+                if combined_distance[0] < prev_distance[0]:
+                    road_path.append(combined_distance)
+                    print("Feeding the new location")
+                    combined_location = new_location
+                elif combined_distance[1] < prev_distance[1]:
+                    road_path.append(combined_distance)
+                    print("Feeding the new location")
+                    combined_location = new_location
+                else:
+                    print("{} doesn't work so reverting to {}".format(new_location, combined_location))
+                    combined_location = combined_location
+        print("Now our path is {}".format(road_path))\
+        #OUR DATAFLOW MODEL IS FUCKED UP, SON 
+
+
 
     def road_constructor_2(self, loc_a, loc_b, r_origin_a, r_origin_b, c_origin_a, c_origin_b):
 

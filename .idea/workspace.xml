@@ -25,7 +25,7 @@
     <favorites_list name="worldgen2" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.27083334">
+    <splitter split-orientation="horizontal" split-proportion="0.1">
       <split-first>
         <leaf>
           <file leaf-file-name="entities.py" pinned="false" current-in-tab="false">
@@ -38,11 +38,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="main" pinned="false" current-in-tab="false">
+          <file leaf-file-name="main" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/main">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="912" max-vertical-offset="1870">
-                  <caret line="89" column="20" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="20" />
+                <state vertical-scroll-proportion="0.5356037" vertical-offset="912" max-vertical-offset="1870">
+                  <caret line="74" column="12" selection-start-line="74" selection-start-column="9" selection-end-line="76" selection-end-column="26" />
                   <folding>
                     <element signature="e#0#24#0" expanded="true" />
                   </folding>
@@ -50,10 +50,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="generalscrap.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="generalscrap.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/generalscrap.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.45496184" vertical-offset="2779" max-vertical-offset="3434">
+                <state vertical-scroll-proportion="0.0" vertical-offset="2788" max-vertical-offset="3434">
                   <caret line="181" column="25" selection-start-line="181" selection-start-column="25" selection-end-line="181" selection-end-column="25" />
                   <folding>
                     <element signature="e#175#213#0" expanded="true" />
@@ -81,8 +81,8 @@
               <file leaf-file-name="worlds.py" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/worlds.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.60383385" vertical-offset="5606" max-vertical-offset="9384">
-                      <caret line="352" column="28" selection-start-line="352" selection-start-column="28" selection-end-line="352" selection-end-column="28" />
+                    <state vertical-scroll-proportion="0.9448947" vertical-offset="6336" max-vertical-offset="10098">
+                      <caret line="407" column="46" selection-start-line="407" selection-start-column="46" selection-end-line="407" selection-end-column="46" />
                       <folding>
                         <element signature="e#26#64#0" expanded="true" />
                       </folding>
@@ -97,8 +97,8 @@
               <file leaf-file-name="worlds.py" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/worlds.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.33226836" vertical-offset="4450" max-vertical-offset="9384">
-                      <caret line="274" column="38" selection-start-line="274" selection-start-column="29" selection-end-line="274" selection-end-column="38" />
+                    <state vertical-scroll-proportion="0.16693678" vertical-offset="5541" max-vertical-offset="10098">
+                      <caret line="332" column="20" selection-start-line="332" selection-start-column="8" selection-end-line="332" selection-end-column="20" />
                       <folding>
                         <element signature="e#26#64#0" expanded="true" />
                       </folding>
@@ -128,10 +128,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="-7" />
+    <option name="width" value="1934" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -399,7 +398,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
+    <frame x="-7" y="0" width="1934" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -409,7 +408,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26504752" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2675906" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -884,19 +883,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="912" max-vertical-offset="1870">
-          <caret line="89" column="20" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/generalscrap.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45496184" vertical-offset="2779" max-vertical-offset="3434">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2788" max-vertical-offset="3434">
           <caret line="181" column="25" selection-start-line="181" selection-start-column="25" selection-end-line="181" selection-end-column="25" />
           <folding>
             <element signature="e#175#213#0" expanded="true" />
@@ -912,10 +901,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/main">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5356037" vertical-offset="912" max-vertical-offset="1870">
+          <caret line="74" column="12" selection-start-line="74" selection-start-column="9" selection-end-line="76" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/worlds.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60383385" vertical-offset="5606" max-vertical-offset="9384">
-          <caret line="352" column="28" selection-start-line="352" selection-start-column="28" selection-end-line="352" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.9448947" vertical-offset="6336" max-vertical-offset="10098">
+          <caret line="407" column="46" selection-start-line="407" selection-start-column="46" selection-end-line="407" selection-end-column="46" />
           <folding>
             <element signature="e#26#64#0" expanded="true" />
           </folding>
