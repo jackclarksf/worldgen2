@@ -367,6 +367,15 @@ class World:
 
             ##### ^^^^ THIS LOOP CAN DEFINITELY BE NEATENED
 
+    def road_constructor_4(self, loc_a, loc_b, r_origin_a, r_origin_b, c_origin_a, c_origin_b):
+        road_path = []
+
+    def location_manipulator(self, input_list, list_options, input_calculations):
+        manipulation_entity = input_list
+        choice = random.choice(list_options)
+        manipulation_entity[choice] += random.choice(input_calculations)
+        return manipulation_entity
+
     def road_constructor_3(self, loc_a, loc_b, r_origin_a, r_origin_b, c_origin_a, c_origin_b):
         road_path = []
         print("OK, here is our position {} {} and our origin {} {} and our city origin {} {}".format(loc_a, loc_b, r_origin_a, r_origin_b, c_origin_a, c_origin_b))
@@ -379,17 +388,19 @@ class World:
         print("Our distance: {}".format(combined_distance))
         while combined_distance != [0, 0]:
             choice = input("Do you want to tick, [y]?")
+            safe_location = combined_location
             if choice == "y":
                 prev_distance = [our_current_distance_a, our_current_distance_b]
                 preserved_location = combined_location
-                new_location = preserved_location
+                new_location = list(preserved_location)
                 print("Attempting to close distance of {} by manipulating location {}".format(prev_distance, new_location))
                 calc_options = [-1, 1]
                 list_option = [0, 1]
-                our_choice = random.choice(list_option)
-                new_location[our_choice] += random.choice(calc_options)
-                print("Our new location is {}".format(new_location))
+                the_new_location = self.location_manipulator(new_location, list_option, calc_options)
+                print("Our new location is {}".format(the_new_location))
+                print("Our original location is {}".format(safe_location))
                 print("Our preserved location is: {}".format(preserved_location))
+                #new_location[our_choice] += random.choice(calc_options)
                 our_current_distance_a = abs(new_location[0] - r_origin_a)
                 our_current_distance_b = abs(new_location[1] - r_origin_b)
                 combined_distance = [our_current_distance_a, our_current_distance_b]

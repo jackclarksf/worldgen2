@@ -25,7 +25,7 @@
     <favorites_list name="worldgen2" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.1">
+    <splitter split-orientation="horizontal" split-proportion="0.21428572">
       <split-first>
         <leaf>
           <file leaf-file-name="entities.py" pinned="false" current-in-tab="false">
@@ -65,7 +65,7 @@
         </leaf>
       </split-first>
       <split-second>
-        <splitter split-orientation="horizontal" split-proportion="0.60991377">
+        <splitter split-orientation="horizontal" split-proportion="0.668">
           <split-first>
             <leaf>
               <file leaf-file-name="temp_scrap.py" pinned="false" current-in-tab="false">
@@ -81,8 +81,8 @@
               <file leaf-file-name="worlds.py" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/worlds.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.5802269" vertical-offset="6272" max-vertical-offset="10115">
-                      <caret line="390" column="68" selection-start-line="390" selection-start-column="68" selection-end-line="390" selection-end-column="68" />
+                    <state vertical-scroll-proportion="0.5802269" vertical-offset="6357" max-vertical-offset="10302">
+                      <caret line="395" column="21" selection-start-line="395" selection-start-column="21" selection-end-line="395" selection-end-column="21" />
                       <folding>
                         <element signature="e#26#64#0" expanded="true" />
                       </folding>
@@ -97,7 +97,7 @@
               <file leaf-file-name="worlds.py" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/worlds.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.16693678" vertical-offset="5541" max-vertical-offset="10115">
+                    <state vertical-scroll-proportion="0.16693678" vertical-offset="5541" max-vertical-offset="10302">
                       <caret line="332" column="20" selection-start-line="332" selection-start-column="8" selection-end-line="332" selection-end-column="20" />
                       <folding>
                         <element signature="e#26#64#0" expanded="true" />
@@ -913,8 +913,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/worlds.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5802269" vertical-offset="6272" max-vertical-offset="10115">
-          <caret line="390" column="68" selection-start-line="390" selection-start-column="68" selection-end-line="390" selection-end-column="68" />
+        <state vertical-scroll-proportion="0.5802269" vertical-offset="6357" max-vertical-offset="10302">
+          <caret line="395" column="21" selection-start-line="395" selection-start-column="21" selection-end-line="395" selection-end-column="21" />
           <folding>
             <element signature="e#26#64#0" expanded="true" />
           </folding>
