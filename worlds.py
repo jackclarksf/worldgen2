@@ -39,22 +39,16 @@ class World:
         cells = starmap(lambda a,b: (x_coord+a, y_coord+b), product((r_list), (r_list)))
         return list(cells)[1:]
 
-    def water_world(self, w_level):
-        water_list = []
-        return water_list
-
     def actual_water_world(self, w_level):
         water_list = []
-        our_coordinates = self.world_coordinates()
-        remaining_list = [x for x in our_coordinates if x not in water_list]
+        remaining_list = [x for x in self.world_coordinates() if x not in water_list]
         water_list = self.island_function(remaining_list) + water_list
         sug_frequency = round(self.x)/3
         self.space_creator_length((round(self.x/3))*2, round(self.y/2), sug_frequency, water_list)
-        for i in our_coordinates:
-            a, b = i
-            if (i[0] == 0) or (i[1] == 0):
+        for i in self.world_coordinates():
+            if (i[0] == 0) or (i[0] == self.x-1):
                 water_list.append(i)
-            elif (i[0] == self.x-1) or (i[1] == self.x-1):
+            elif (i[1] == 0) or (i[1] == self.x-1):
                 water_list.append(i)
         return water_list
 
@@ -78,12 +72,10 @@ class World:
             coordinates_to_check.append(a)
             count += 1
         for i in coordinates_to_check:
-            a, b = i
-            self.space_creator(a, b, check_list)
+            self.space_creator(i[0], i[1], check_list)
 
     def space_creator(self, coordinate_a, coordinate_b, list_of_entities):
         rad_to_check = round((self.x/3)/2)
-        #print("cHECKING RADIUS AT A: {} B{} WITH RADIUS {}".format(coordinate_a, coordinate_b, rad_to_check))
         nearby = self.get_neighbours_specifiable(coordinate_a, coordinate_b, rad_to_check)
         for i in nearby:
             if i in list_of_entities:
@@ -112,8 +104,7 @@ class World:
     def land_generator(self):
         land = [x for x in self.world_coordinates() if x not in self.water_return()]
         for i in land:
-            a, b = i
-            self.vegetation.append(Vegetation(a, b))
+            self.vegetation.append(Vegetation(i[0], i[1]))
 
     def land_energy_growth(self):
         for i in self.vegetation:
@@ -132,6 +123,7 @@ class World:
             energy += i.vitality
         #print("Total energy is {} across {}".format(energy, len(self.vegetation)))
 
+#######NEED TO START USING THIS PROPERLY 
 
 ###################################
 ######## ^^ CITY ENERGY STUFF ^^###
