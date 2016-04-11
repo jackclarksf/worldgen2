@@ -52,13 +52,9 @@ class World:
         self.space_creator_length((round(self.x/3))*2, round(self.y/2), sug_frequency, water_list)
         for i in our_coordinates:
             a, b = i
-            if a == 0:
+            if (i[0] == 0) or (i[1] == 0):
                 water_list.append(i)
-            elif b == 0:
-                water_list.append(i)
-            elif a == self.x-1:
-                water_list.append(i)
-            elif b == self.x-1:
+            elif (i[0] == self.x-1) or (i[1] == self.x-1):
                 water_list.append(i)
         return water_list
 
@@ -185,20 +181,18 @@ class World:
                 pos_locs = self.neighbour_move_options(a, b, 1)
                 if len(pos_locs) > 0:
                     our_move = random.choice(pos_locs)
-                    x, y = our_move
-                    self.scouts.append(Scout(x, y, c, d))
+                    self.scouts.append(Scout(our_move[0], our_move[1], c, d))
+                    #print("City growth at {} {}".format(our_move[0], our_move[1]))
                     i.growth = 0
-            elif i.growth > 0:
-                if i.growth < 11:
-                    i.add_growth()
+            elif i.growth > 0 < 11:
+                i.add_growth()
             i.add_age()
             if i.age % 40 == 0:
                 pos_locs = self.neighbour_move_options(a, b, 1)
                 if len(pos_locs) > 0:
                     #print("City at {} {} with origin {} {} has growth of {} \n potential moves = {} ".format(a, b, c, d, i.growth, pos_locs))
                     our_move = random.choice(pos_locs)
-                    x, y = our_move
-                    self.scouts.append(Scout(x, y, c, d))
+                    self.scouts.append(Scout(our_move[0], our_move[1], c, d))
                 else:
                     print("City is crowded!")
 
@@ -230,7 +224,6 @@ class World:
             duplicate_list = [item for item, count in collections.Counter(our_route).items() if count > 1]
             if len(duplicate_list) > 0:
                 for i in duplicate_list:
-                    #print("Killing a road")
                     our_route.remove(i)
 
 
@@ -270,9 +263,10 @@ class World:
                 for i in self.cities:
                     if our_decision == i.get_location():
                         city_origina, city_originb = i.return_city_origin()
+                        print("Creating city at {} {}".format(a, b))
                         self.cities.append(City(a, b, city_origina, city_originb))
                         i.add_growth()
-                        self.road_constructor_3(a, b, scout_origa, scout_origb, city_origina, city_originb)
+                        self.road_constructor(a, b, scout_origa, scout_origb, city_origina, city_originb)
 
             elif our_hits > 50:
                 self.scouts.remove(i)
@@ -282,37 +276,30 @@ class World:
                     if len(self.neighbour_type_check_return(a, b, 3, other_cities)) > 0:
                         locations = self.neighbour_type_check_return(a, b, 3, other_cities)
                         chosen_location = random.choice(locations)
-                        c, d = chosen_location
-                        for l in pos_moves:
-                            e, f = l
-                            if c > e:
-                                if e > a:
-                                    pos_moves.remove(l)
-                            elif d > f:
-                                if f > b:
-                                    pos_moves.remove(l)
-                        ##### ^ this entire movement loop can be improved I think ^ ####
+                    for l in pos_moves:
+                        if chosen_location[0] > l[0] > a:
+                            pos_moves.remove(l)
+                        elif chosen_location[1] > l[1] > b:
+                            pos_moves.remove(l)
 
                 if len(self.neighbour_type_check_return(a, b, 2, other_cities)) > 0:
                     locations = self.neighbour_type_check_return(a, b, 2, other_cities)
                     chosen_location = random.choice(locations)
-                    c, d = chosen_location
                     for l in pos_moves:
-                        e, f = l
-                        if c > e:
-                            if e > a:
-                                pos_moves.remove(l)
-                        elif d > f:
-                            if f > b:
-                                pos_moves.remove(l)
+                        if chosen_location[0] > l[0] > a:
+                            pos_moves.remove(l)
+                        elif chosen_location[1] > l[1] > b:
+                            pos_moves.remove(l)
+
+                if len(pos_moves) > 0:
+                    move = random.choice(pos_moves)
+                    c, d = move
+                    i.x = c
+                    i.y = d
+                    i.paths_taken.append(move)
+
                 else:
                     i.add_hit_rate()
-
-                move = random.choice(pos_moves)
-                c, d = move
-                i.x = c
-                i.y = d
-                i.paths_taken.append(move)
 
             else:
                 print("Out of moves!")
@@ -328,13 +315,14 @@ class World:
 #########ROADBUILDING#######
 ###################################
 #function that takes in a city and a scout origin
-#works out a line between them that skirts around water
 
-    def road_constructor(self, city_coord_a, city_coord_b, origin_coord_a, origin_coord_b, city_origin_a, city_origin_b,):
+    def road_constructor(self, scout_loc_a, scout_loc_b, origin_coord_a, origin_coord_b, city_origin_a, city_origin_b,):
         road_path = []
-        #print("Attempting to draw road between {} {} and origin {} {}".format(city_coord_a, city_coord_b, origin_coord_a, origin_coord_b))
-        dummy_city_a = city_coord_a
-        dummy_city_b = city_coord_b
+        seeker_coordinate = origin_coord_a, origin_coord_b
+        city_coordinate = scout_loc_a, scout_loc_b
+        city_origin_coordinate = city_origin_a, city_origin_b
+        dummy_city_a = scout_loc_a
+        dummy_city_b = scout_loc_b
         dummy_origin_a = origin_coord_a
         dummy_origin_b = origin_coord_b
         abs_a_diff = abs(dummy_city_a - dummy_origin_a)
@@ -358,101 +346,17 @@ class World:
                 road_path.append(combined_b)
                 abs_b_diff = new_diff
 
-        seeker_coordinate = origin_coord_a, origin_coord_b
-        city_coordinate = city_coord_a, city_coord_b
-        city_origin_coordinate = city_origin_a, city_origin_b
         if seeker_coordinate in road_path:
             road_path.remove(seeker_coordinate)
             self.roads.append(Road(city_coordinate, seeker_coordinate, road_path, city_origin_coordinate))
 
             ##### ^^^^ THIS LOOP CAN DEFINITELY BE NEATENED
-
-    def road_constructor_4(self, loc_a, loc_b, r_origin_a, r_origin_b, c_origin_a, c_origin_b):
-        road_path = []
-
-    def location_manipulator(self, input_list, list_options, input_calculations):
-        manipulation_entity = input_list
-        choice = random.choice(list_options)
-        manipulation_entity[choice] += random.choice(input_calculations)
-        return manipulation_entity
-
-    def road_constructor_3(self, loc_a, loc_b, r_origin_a, r_origin_b, c_origin_a, c_origin_b):
-        road_path = []
-        print("OK, here is our position {} {} and our origin {} {} and our city origin {} {}".format(loc_a, loc_b, r_origin_a, r_origin_b, c_origin_a, c_origin_b))
-        #WHAT WE NEED IS TO BUILD A ROUTE BETWEEN OUR LOCATION (LOC) AND SCOUT ORIGIN (R_ORIG)
-        our_current_distance_a = abs(loc_a - r_origin_a)
-        our_current_distance_b = abs(loc_b - r_origin_b)
-        combined_distance = [our_current_distance_a, our_current_distance_b]
-        combined_location = [loc_a, loc_b]
-        combined_origin = [r_origin_a, r_origin_b]
-        print("Our distance: {}".format(combined_distance))
-        while combined_distance != [0, 0]:
-            choice = input("Do you want to tick, [y]?")
-            safe_location = combined_location
-            if choice == "y":
-                prev_distance = [our_current_distance_a, our_current_distance_b]
-                preserved_location = combined_location
-                new_location = list(preserved_location)
-                print("Attempting to close distance of {} by manipulating location {}".format(prev_distance, new_location))
-                calc_options = [-1, 1]
-                list_option = [0, 1]
-                the_new_location = self.location_manipulator(new_location, list_option, calc_options)
-                print("Our new location is {}".format(the_new_location))
-                print("Our original location is {}".format(safe_location))
-                print("Our preserved location is: {}".format(preserved_location))
-                #new_location[our_choice] += random.choice(calc_options)
-                our_current_distance_a = abs(new_location[0] - r_origin_a)
-                our_current_distance_b = abs(new_location[1] - r_origin_b)
-                combined_distance = [our_current_distance_a, our_current_distance_b]
-                print("Our distance now: {}".format(combined_distance))
-                if combined_distance[0] < prev_distance[0]:
-                    road_path.append(combined_distance)
-                    print("Feeding the new location")
-                    combined_location = new_location
-                elif combined_distance[1] < prev_distance[1]:
-                    road_path.append(combined_distance)
-                    print("Feeding the new location")
-                    combined_location = new_location
-                else:
-                    print("{} doesn't work so reverting to {}".format(new_location, preserved_location))
-                    combined_location = combined_location
-        print("Now our path is {}".format(road_path))\
-        #OUR DATAFLOW MODEL IS FUCKED UP, SON
+            ###NOTE - SPENT TWO DAYS WRITING SILLY WAYS TO NEATEN THIS EARLIER, LOL
+            ###PROBABLY GOOD ENUFF INNIT
 
 
 
-    def road_constructor_2(self, loc_a, loc_b, r_origin_a, r_origin_b, c_origin_a, c_origin_b):
 
-        def abs_diff_checker(input_a, input_b, r_a, r_b):
-            road_path = []
-            distance_tuple = [input_a, input_b]
-            target_distance = [0, 0]
-            actual_distance = [r_a, r_b]
-            while distance_tuple > target_distance:
-                calc_options = [-1, 1]
-                tuple_option = [0, 1]
-                our_option = random.choice(tuple_option)
-                distance_tuple[our_option] += random.choice(calc_options)
-                new_distance = [0, 0]
-                new_distance[0] = abs(distance_tuple[0] - actual_distance[0])
-                new_distance[1] = abs(distance_tuple[1] - actual_distance[1])
-                print("Our tuples are now new distance {} and distance tuple {}".format(new_distance, distance_tuple))
-                if tuple(new_distance) < tuple(distance_tuple):
-                    road_path.append(new_distance)
-                    distance_tuple = new_distance
-            return road_path
-
-        abs_a_diff = abs(loc_a - r_origin_a)
-        abs_b_diff = abs(loc_b - r_origin_b)
-
-        candidate_path = abs_diff_checker(abs_a_diff, abs_b_diff, r_origin_a, r_origin_b)
-        print("Our candidate path is: {}".format(candidate_path))
-        seeker_coordinate = r_origin_a, r_origin_b
-        city_coordinate = loc_a, loc_b
-        city_origin_coordinate = c_origin_a, c_origin_b
-        if seeker_coordinate in candidate_path:
-            candidate_path.remove(seeker_coordinate)
-            self.roads.append(Road(city_coordinate, seeker_coordinate, candidate_path, city_origin_coordinate))
 
 
 

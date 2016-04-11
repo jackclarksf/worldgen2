@@ -1,14 +1,23 @@
-our_tuple = 12, 4
-distance_tuple = 14, 2
-our_target = 0, 0
+c = 10
+e = 5
+a = 4
 
-print(our_tuple)
-print(our_target)
-print(distance_tuple)
+if c > e and e > a:
+    print("True!")
 
-while distance_tuple > our_tuple:
-    a, b = distance_tuple
-    a -= 1
-    print(a, b)
-    distance_tuple = a, b
+if c > e > a:
+    print("True")
 
+l = 3, 4
+print(l)
+print(l[0])
+
+def func_a():
+    return 5
+
+def func_b():
+    return 8
+
+print(func_a())
+lemon = func_a() + func_b()
+print(lemon)
