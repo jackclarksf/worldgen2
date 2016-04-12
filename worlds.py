@@ -123,7 +123,7 @@ class World:
             energy += i.vitality
         #print("Total energy is {} across {}".format(energy, len(self.vegetation)))
 
-#######NEED TO START USING THIS PROPERLY 
+#######NEED TO START USING THIS PROPERLY
 
 ###################################
 ######## ^^ CITY ENERGY STUFF ^^###
@@ -132,15 +132,13 @@ class World:
     def city_energy_growth(self):
         for i in self.cities:
             our_location = i.get_location()
-            our_loc_x, our_loc_y = our_location
-            neighbours_to_check = self.get_neighbours_specifiable(our_loc_x, our_loc_y, 1)
+            neighbours_to_check = self.get_neighbours_specifiable(our_location[0], our_location[1], 1)
             for j in self.vegetation:
                 our_veg_loc = j.get_location()
                 if our_veg_loc in neighbours_to_check:
                     if j.vitality > 1:
                         j.decrease_vitality()
                         i.energy += 1
-            #print("City at {} now has energy {}".format(our_location, i.energy))
 
 
 ###################################
@@ -153,28 +151,24 @@ class World:
         city_quantity = 0
         while city_quantity < city_number:
             city_coord = random.choice(free)
-            a, b = city_coord
-            while len(self.neighbour_type_check_return(a, b, 1, self.water_return())) > 1:
+            while len(self.neighbour_type_check_return(city_coord[0], city_coord[1], 1, self.water_return())) > 1:
                 city_coord = random.choice(free)
-                a, b = city_coord
-            while len(self.neighbour_type_check_return(a, b, 3, self.return_locations_for_object_group(self.cities))) > 0:
+            while len(self.neighbour_type_check_return(city_coord[0], city_coord[1], 3, self.return_locations_for_object_group(self.cities))) > 0:
                 city_coord = random.choice(free)
-                a, b = city_coord
 
-            self.cities.append(City(a, b, a, b))
+            self.cities.append(City(city_coord[0], city_coord[1], city_coord[0], city_coord[1]))
             city_quantity += 1
         print("Our cities: {}".format(self.return_locations_for_object_group(self.cities)))
 
     def city_growth(self):
         for i in self.cities:
             a, b = i.get_location()
-            c, d = i.x0, i.y0
+            #c, d = i.x0, i.y0
             if i.growth > 10:
                 pos_locs = self.neighbour_move_options(a, b, 1)
                 if len(pos_locs) > 0:
                     our_move = random.choice(pos_locs)
-                    self.scouts.append(Scout(our_move[0], our_move[1], c, d))
-                    #print("City growth at {} {}".format(our_move[0], our_move[1]))
+                    self.scouts.append(Scout(our_move[0], our_move[1], i.x0, i.y0))
                     i.growth = 0
             elif i.growth > 0 < 11:
                 i.add_growth()
@@ -184,7 +178,7 @@ class World:
                 if len(pos_locs) > 0:
                     #print("City at {} {} with origin {} {} has growth of {} \n potential moves = {} ".format(a, b, c, d, i.growth, pos_locs))
                     our_move = random.choice(pos_locs)
-                    self.scouts.append(Scout(our_move[0], our_move[1], c, d))
+                    self.scouts.append(Scout(our_move[0], our_move[1], i.x0, i.y0))
                 else:
                     print("City is crowded!")
 
