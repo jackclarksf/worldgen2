@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34f3847b-2ffa-45c5-8f08-478a2b8fd9c3" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/entities.py" afterPath="$PROJECT_DIR$/entities.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/worlds.py" afterPath="$PROJECT_DIR$/worlds.py" />
     </list>
     <ignored path="worldgen2.iws" />
@@ -31,8 +32,8 @@
           <file leaf-file-name="entities.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/entities.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="1.7991859" vertical-offset="0" max-vertical-offset="1853">
-                  <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.5774947" vertical-offset="612" max-vertical-offset="1870">
+                  <caret line="52" column="20" selection-start-line="52" selection-start-column="20" selection-end-line="52" selection-end-column="20" />
                   <folding />
                 </state>
               </provider>
@@ -41,8 +42,8 @@
           <file leaf-file-name="main" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/main">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1870">
-                  <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.0" vertical-offset="289" max-vertical-offset="1870">
+                  <caret line="46" column="36" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
                   <folding>
                     <element signature="e#0#24#0" expanded="true" />
                   </folding>
@@ -71,7 +72,7 @@
               <file leaf-file-name="temp_scrap.py" pinned="false" current-in-tab="false">
                 <entry file="file://$PROJECT_DIR$/temp_scrap.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
+                    <state vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="476">
                       <caret line="22" column="12" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
                       <folding />
                     </state>
@@ -81,8 +82,8 @@
               <file leaf-file-name="worlds.py" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/worlds.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.85169494" vertical-offset="2474" max-vertical-offset="8432">
-                      <caret line="181" column="21" selection-start-line="181" selection-start-column="21" selection-end-line="181" selection-end-column="21" />
+                    <state vertical-scroll-proportion="0.91855204" vertical-offset="3827" max-vertical-offset="8585">
+                      <caret line="249" column="52" selection-start-line="249" selection-start-column="52" selection-end-line="249" selection-end-column="52" />
                       <folding>
                         <element signature="e#26#64#0" expanded="true" />
                       </folding>
@@ -97,8 +98,8 @@
               <file leaf-file-name="worlds.py" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/worlds.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.31638417" vertical-offset="6474" max-vertical-offset="8432">
-                      <caret line="394" column="22" selection-start-line="394" selection-start-column="8" selection-end-line="394" selection-end-column="22" />
+                    <state vertical-scroll-proportion="0.47558385" vertical-offset="6627" max-vertical-offset="8585">
+                      <caret line="403" column="22" selection-start-line="403" selection-start-column="8" selection-end-line="403" selection-end-column="22" />
                       <folding>
                         <element signature="e#26#64#0" expanded="true" />
                       </folding>
@@ -120,10 +121,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/worldscrap.py" />
-        <option value="$PROJECT_DIR$/entities.py" />
         <option value="$PROJECT_DIR$/main" />
         <option value="$PROJECT_DIR$/generalscrap.py" />
         <option value="$PROJECT_DIR$/temp_scrap.py" />
+        <option value="$PROJECT_DIR$/entities.py" />
         <option value="$PROJECT_DIR$/worlds.py" />
       </list>
     </option>
@@ -210,25 +211,6 @@
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
-    <configuration default="false" name="generalscrap" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="worldgen2" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/generalscrap.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
     <configuration default="false" name="worldscrap" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -261,6 +243,25 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="worldgen2" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/temp_scrap.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="entities" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="worldgen2" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/entities.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <RunnerSettings RunnerId="PythonRunner" />
@@ -392,17 +393,17 @@
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.main" />
       <item index="1" class="java.lang.String" itemvalue="Python.worlds" />
-      <item index="2" class="java.lang.String" itemvalue="Python.generalscrap" />
-      <item index="3" class="java.lang.String" itemvalue="Python.worldscrap" />
-      <item index="4" class="java.lang.String" itemvalue="Python.temp_scrap" />
+      <item index="2" class="java.lang.String" itemvalue="Python.worldscrap" />
+      <item index="3" class="java.lang.String" itemvalue="Python.temp_scrap" />
+      <item index="4" class="java.lang.String" itemvalue="Python.entities" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.main" />
-        <item index="1" class="java.lang.String" itemvalue="Python.temp_scrap" />
+        <item index="1" class="java.lang.String" itemvalue="Python.entities" />
         <item index="2" class="java.lang.String" itemvalue="Python.worlds" />
-        <item index="3" class="java.lang.String" itemvalue="Python.worldscrap" />
-        <item index="4" class="java.lang.String" itemvalue="Python.generalscrap" />
+        <item index="3" class="java.lang.String" itemvalue="Python.temp_scrap" />
+        <item index="4" class="java.lang.String" itemvalue="Python.worldscrap" />
       </list>
     </recent_temporary>
   </component>
@@ -421,7 +422,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="0" width="1934" height="1047" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -430,7 +431,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1705757" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.45415777" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -461,7 +462,15 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -917,8 +926,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1870">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="289" max-vertical-offset="1870">
+          <caret line="46" column="36" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
@@ -927,16 +936,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/entities.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.7991859" vertical-offset="0" max-vertical-offset="1853">
-          <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.5774947" vertical-offset="612" max-vertical-offset="1870">
+          <caret line="52" column="20" selection-start-line="52" selection-start-column="20" selection-end-line="52" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/worlds.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.85169494" vertical-offset="2474" max-vertical-offset="8432">
-          <caret line="181" column="21" selection-start-line="181" selection-start-column="21" selection-end-line="181" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.91855204" vertical-offset="3827" max-vertical-offset="8585">
+          <caret line="249" column="52" selection-start-line="249" selection-start-column="52" selection-end-line="249" selection-end-column="52" />
           <folding>
             <element signature="e#26#64#0" expanded="true" />
           </folding>

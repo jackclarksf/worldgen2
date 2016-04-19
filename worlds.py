@@ -238,6 +238,9 @@ class World:
         for i in self.scouts:
             a, b = i.get_location()
             our_hits = i.hit_rate()
+            i.age += 1
+            our_age = i.age
+            print("Our hits = {} and age: {}".format(our_hits, our_age))
             scout_origa, scout_origb = i.return_origin()
             scout_orig = i.return_origin()
             pos_moves = self.neighbour_move_options(a, b, 1)
@@ -254,19 +257,24 @@ class World:
                         i.add_growth()
                         self.road_constructor(a, b, scout_origa, scout_origb, city_origina, city_originb)
 
-            elif our_hits > 50:
+            elif our_hits > (self.x + 10):
+                print("Too aimless, killing")
                 self.scouts.remove(i)
 
             elif len(pos_moves) > 0:
                 if our_hits > 10:
+                    print("Launching meta scan")
                     if len(self.neighbour_type_check_return(a, b, 3, other_cities)) > 0:
                         locations = self.neighbour_type_check_return(a, b, 3, other_cities)
                         chosen_location = random.choice(locations)
-                    for l in pos_moves:
-                        if chosen_location[0] > l[0] > a:
-                            pos_moves.remove(l)
-                        elif chosen_location[1] > l[1] > b:
-                            pos_moves.remove(l)
+                        print("POs moves {}".format(pos_moves))
+                        for l in pos_moves:
+                            if chosen_location[0] > l[0] > a:
+                                pos_moves.remove(l)
+                            elif chosen_location[1] > l[1] > b:
+                                pos_moves.remove(l)
+                        print("Pos moves now: {}".format(pos_moves))
+                        #NEED TO ADD AN ADDITIONAL ACTION STEP HERE
 
                 if len(self.neighbour_type_check_return(a, b, 2, other_cities)) > 0:
                     locations = self.neighbour_type_check_return(a, b, 2, other_cities)
@@ -283,6 +291,7 @@ class World:
                     i.x = c
                     i.y = d
                     i.paths_taken.append(move)
+                    i.add_hit_rate()
 
                 else:
                     i.add_hit_rate()
