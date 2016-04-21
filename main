@@ -94,6 +94,7 @@ while game_world.tick < 200:
     game_world.paint_map(land1)
     game_world.base_map()
     game_world.move_cycle()
+    game_world.world.telemetry_output(game_world.tick, game_world.bmap)
     #game_world.world.coordinate_telemetry(game_world.tick)
     game_world.auto_tick()
     #game_world.tick_forward()

@@ -208,9 +208,11 @@ class World:
         for i in self.roads:
             our_route = i.get_route()
             duplicate_list = [item for item, count in collections.Counter(our_route).items() if count > 1]
+            print("route testing {}".format(duplicate_list))
             if len(duplicate_list) > 0:
                 for i in duplicate_list:
                     our_route.remove(i)
+        #SO THIS ONE ISN'T WORKING PROPERLY
 
 
 ###################################
@@ -267,14 +269,11 @@ class World:
                     if len(self.neighbour_type_check_return(a, b, 3, other_cities)) > 0:
                         locations = self.neighbour_type_check_return(a, b, 3, other_cities)
                         chosen_location = random.choice(locations)
-                        print("POs moves {}".format(pos_moves))
                         for l in pos_moves:
                             if chosen_location[0] > l[0] > a:
                                 pos_moves.remove(l)
                             elif chosen_location[1] > l[1] > b:
                                 pos_moves.remove(l)
-                        print("Pos moves now: {}".format(pos_moves))
-                        #NEED TO ADD AN ADDITIONAL ACTION STEP HERE
 
                 if len(self.neighbour_type_check_return(a, b, 2, other_cities)) > 0:
                     locations = self.neighbour_type_check_return(a, b, 2, other_cities)
@@ -357,7 +356,7 @@ class World:
 
 
 
-            ###################################
+###################################
 #####NEIGHBOURS AND CHUMS#####
 ###################################
 
@@ -414,6 +413,15 @@ class World:
 #########TELEMETRY OUTPUT#############
 ######################################
 
+    def telemetry_output(self, step, main_map):
+        with open("ourtelemetry.txt", "a") as out_file:
+            out_file.write("\n" + 'STEP {}'.format(step) + "\n")
+            for i in main_map:
+                out_file.write("{}".format(i) + "\n")
+                #NEXT STEP - WRITE A BLENDER PARSER FOR THIS TYPE OF DATA
+
+
+
     def return_locations_for_object_group(self, object_to_return):
         loc_list = []
         for i in object_to_return:
@@ -421,7 +429,6 @@ class World:
             loc_list.append(loc)
 
         return loc_list
-
 
     def vegetation_return(self):
         our_veggies = []
