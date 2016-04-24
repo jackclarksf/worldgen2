@@ -4,7 +4,7 @@ from itertools import product, starmap
 import collections
 import random
 from entities import City, Scout, Road, MetaRoad, Vegetation
-
+from temp_scrap import Image_Maker
 
 #OBJECTIVES:
 #write a city function that scans for neighbours and converts to same origin if connected
