@@ -1,23 +1,18 @@
-c = 10
-e = 5
-a = 4
+from PIL import Image, ImageDraw
 
-if c > e and e > a:
-    print("True!")
 
-if c > e > a:
-    print("True")
+print("Dog")
 
-l = 3, 4
-print(l)
-print(l[0])
+def pil_image():
+    size = (100, 100)
+    im = Image.new("RGB", size)
+    draw = ImageDraw.Draw(im)
+    red = (255,210,10)
+    position = (0, 0)
+    draw.rectangle((position, (10, 20)), fill=red)
 
-def func_a():
-    return 5
 
-def func_b():
-    return 8
+    print(im)
+    im.save("C:/Users/iamja_000/Documents/GitHub/worldgen2/lemons.jpeg")
 
-print(func_a())
-lemon = func_a() + func_b()
-print(lemon)
+pil_image()
