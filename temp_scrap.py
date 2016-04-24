@@ -15,21 +15,75 @@ visual_map = [['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
 ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W']]
 
 class Image_Maker:
-    def __init__(self, size, our_list):
-        red = (255,210,10)
-        img_size = (size*10, size*10)
-        im = Image.new("RGB", img_size)
+    def __init__(self, our_list, our_name):
+        self.image_list_iterator(our_list, our_name)
+
+    def image_list_iterator(self, input_list, pic_name):
+        size = (len(input_list[0])*10, len(input_list[0]*10))
+        im = Image.new("RGB", size)
         draw = ImageDraw.Draw(im)
-        for i in our_list:
-            j = 0
-            while j < len(i):
-                pos_y = 0
-                if i[j] == "W":
-                    draw.rectangle(((0, pos_y), (10, 10)), fill=red)
-                    pos_y += 10
-        im.save("C:/Users/iamja_000/Documents/GitHub/worldgen2/lemonsx.jpeg")
+        position = (0, 0)
+        position2 = (10, 10)
+        count = 0
+        for i in input_list:
+            print(i, input_list.index(i))
+            print(count)
+            our_index = input_list.index(i)
+            position = (0, count*10)
+            position2 = (10, (count*10) + 10)
+            for j in i:
+                if j == "W":
+                    draw.rectangle((position, position2), fill="blue")
+                    position = list(position)
+                    position[0] += 10
+                    position = tuple(position)
+                    position2 = list(position2)
+                    position2[0] += 10
+                    position2 = tuple(position2)
+                elif j == "S":
+                    draw.rectangle((position, position2), fill="red")
+                    position = list(position)
+                    position[0] += 10
+                    position = tuple(position)
+                    position2 = list(position2)
+                    position2[0] += 10
+                    position2 = tuple(position2)
+                elif j == "C":
+                    draw.rectangle((position, position2), fill="green")
+                    position = list(position)
+                    position[0] += 10
+                    position = tuple(position)
+                    position2 = list(position2)
+                    position2[0] += 10
+                    position2 = tuple(position2)
+                elif j == "R":
+                    draw.rectangle((position, position2), fill="purple")
+                    position = list(position)
+                    position[0] += 10
+                    position = tuple(position)
+                    position2 = list(position2)
+                    position2[0] += 10
+                    position2 = tuple(position2)
+                elif j == "X":
+                    draw.rectangle((position, position2), fill="orange")
+                    position = list(position)
+                    position[0] += 10
+                    position = tuple(position)
+                    position2 = list(position2)
+                    position2[0] += 10
+                    position2 = tuple(position2)
+                else:
+                    draw.rectangle((position, position2), fill="yellow")
+                    position = list(position)
+                    position[0] += 10
+                    position = tuple(position)
+                    position2 = list(position2)
+                    position2[0] += 10
+                    position2 = tuple(position2)
+            count += 1
+        im.save("C:/Users/iamja_000/Documents/GitHub/worldgen2/lemons_experiment_" + str(pic_name) + ".jpg")
 
-
+#image_list_iterator(visual_map, 20)
 
 def pil_image():
     size = (100, 100)
@@ -48,7 +102,7 @@ def pil_image():
     print(im)
     im.save("C:/Users/iamja_000/Documents/GitHub/worldgen2/lemonsyyy.jpeg")
 
-print(visual_map)
+#print(visual_map)
 #pil_image()
 
 def pil_image_iterative():
@@ -72,4 +126,4 @@ def pil_image_iterative():
     im.save("C:/Users/iamja_000/Documents/GitHub/worldgen2/lemonsxx.jpeg")
 
 
-pil_image_iterative()
+#pil_image_iterative()

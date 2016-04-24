@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34f3847b-2ffa-45c5-8f08-478a2b8fd9c3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lemonsyyy.jpeg" afterPath="$PROJECT_DIR$/lemonsyyy.jpeg" />
+      <change type="DELETED" beforePath="C:\Users\iamja_000\Documents\GitHub\worldgen2\lemonsxx.jpeg" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main" afterPath="$PROJECT_DIR$/main" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ourtelemetry.txt" afterPath="$PROJECT_DIR$/ourtelemetry.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/temp_scrap.py" afterPath="$PROJECT_DIR$/temp_scrap.py" />
     </list>
     <ignored path="worldgen2.iws" />
@@ -26,7 +28,7 @@
     <favorites_list name="worldgen2" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.3136289">
+    <splitter split-orientation="horizontal" split-proportion="0.3385533">
       <split-first>
         <leaf>
           <file leaf-file-name="entities.py" pinned="false" current-in-tab="false">
@@ -42,8 +44,8 @@
           <file leaf-file-name="main" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/main">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="2.2717717" vertical-offset="0" max-vertical-offset="1972">
-                  <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.42700157" vertical-offset="1326" max-vertical-offset="1972">
+                  <caret line="94" column="14" selection-start-line="94" selection-start-column="14" selection-end-line="94" selection-end-column="14" />
                   <folding>
                     <element signature="e#0#24#0" expanded="true" />
                   </folding>
@@ -66,14 +68,14 @@
         </leaf>
       </split-first>
       <split-second>
-        <splitter split-orientation="horizontal" split-proportion="0.79631114">
+        <splitter split-orientation="horizontal" split-proportion="0.5940919">
           <split-first>
             <leaf>
               <file leaf-file-name="temp_scrap.py" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/temp_scrap.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.866562" vertical-offset="689" max-vertical-offset="1360">
-                      <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+                    <state vertical-scroll-proportion="0.66718996" vertical-offset="714" max-vertical-offset="2295">
+                      <caret line="67" column="69" selection-start-line="67" selection-start-column="69" selection-end-line="67" selection-end-column="69" />
                       <folding>
                         <element signature="e#0#32#0" expanded="true" />
                       </folding>
@@ -84,8 +86,8 @@
               <file leaf-file-name="worlds.py" pinned="false" current-in-tab="false">
                 <entry file="file://$PROJECT_DIR$/worlds.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8704">
-                      <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+                    <state vertical-scroll-proportion="-112.55173" vertical-offset="102" max-vertical-offset="8704">
+                      <caret line="198" column="33" selection-start-line="198" selection-start-column="28" selection-end-line="198" selection-end-column="33" />
                       <folding>
                         <element signature="e#26#64#0" expanded="true" />
                       </folding>
@@ -112,8 +114,8 @@
               <file leaf-file-name="blendervisualizationscript2.py" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/blendervisualizationscript2.py">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="-0.8168168" vertical-offset="663" max-vertical-offset="1428">
-                      <caret line="7" column="8" selection-start-line="5" selection-start-column="0" selection-end-line="14" selection-end-column="51" />
+                    <state vertical-scroll-proportion="0.5149137" vertical-offset="539" max-vertical-offset="1428">
+                      <caret line="51" column="6" selection-start-line="51" selection-start-column="6" selection-end-line="51" selection-end-column="6" />
                       <folding>
                         <element signature="e#0#10#0" expanded="true" />
                       </folding>
@@ -140,14 +142,14 @@
         <option value="$PROJECT_DIR$/blendervisualizationscript.py" />
         <option value="$PROJECT_DIR$/blendervisualizationscript2.py" />
         <option value="$PROJECT_DIR$/worlds.py" />
-        <option value="$PROJECT_DIR$/main" />
         <option value="$PROJECT_DIR$/temp_scrap.py" />
+        <option value="$PROJECT_DIR$/main" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="84" />
-    <option name="width" value="1192" />
+    <option name="x" value="570" />
+    <option name="width" value="1357" />
     <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -191,7 +193,7 @@
       <recent name="C:\Users\iamja_000\Documents\GitHub\worldgen2" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.temp_scrap">
+  <component name="RunManager" selected="Python.main">
     <configuration default="false" name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -226,25 +228,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="worldgen2" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/worlds.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="temp_scrap" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="worldgen2" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/temp_scrap.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <RunnerSettings RunnerId="PythonRunner" />
@@ -411,20 +394,38 @@
       <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
+    <configuration default="false" name="temp_scrap" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="worldgen2" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/temp_scrap.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.main" />
-      <item index="1" class="java.lang.String" itemvalue="Python.worlds" />
-      <item index="2" class="java.lang.String" itemvalue="Python.temp_scrap" />
+      <item index="0" class="java.lang.String" itemvalue="Python.temp_scrap" />
+      <item index="1" class="java.lang.String" itemvalue="Python.main" />
+      <item index="2" class="java.lang.String" itemvalue="Python.worlds" />
       <item index="3" class="java.lang.String" itemvalue="Python.entities" />
       <item index="4" class="java.lang.String" itemvalue="Python.blendervisualizationscript2" />
     </list>
     <recent_temporary>
-      <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.temp_scrap" />
-        <item index="1" class="java.lang.String" itemvalue="Python.main" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Python.main" />
+        <item index="1" class="java.lang.String" itemvalue="Python.entities" />
         <item index="2" class="java.lang.String" itemvalue="Python.worlds" />
         <item index="3" class="java.lang.String" itemvalue="Python.blendervisualizationscript2" />
-        <item index="4" class="java.lang.String" itemvalue="Python.entities" />
       </list>
     </recent_temporary>
   </component>
@@ -442,7 +443,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="84" y="0" width="1192" height="1047" extended-state="0" />
+    <frame x="570" y="0" width="1357" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -929,38 +930,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/entities.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1092" max-vertical-offset="1870">
-          <caret line="78" column="14" selection-start-line="78" selection-start-column="13" selection-end-line="78" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.2717717" vertical-offset="0" max-vertical-offset="1972">
-          <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/blendervisualizationscript2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.8168168" vertical-offset="663" max-vertical-offset="1428">
-          <caret line="7" column="8" selection-start-line="5" selection-start-column="0" selection-end-line="14" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.5149137" vertical-offset="539" max-vertical-offset="1428">
+          <caret line="51" column="6" selection-start-line="51" selection-start-column="6" selection-end-line="51" selection-end-column="6" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/entities.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1870">
+          <caret line="78" column="14" selection-start-line="78" selection-start-column="13" selection-end-line="78" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/worlds.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8704">
-          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+        <state vertical-scroll-proportion="-112.55173" vertical-offset="102" max-vertical-offset="8704">
+          <caret line="198" column="33" selection-start-line="198" selection-start-column="28" selection-end-line="198" selection-end-column="33" />
           <folding>
             <element signature="e#26#64#0" expanded="true" />
           </folding>
@@ -969,10 +960,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/temp_scrap.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.866562" vertical-offset="689" max-vertical-offset="1360">
-          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.66718996" vertical-offset="714" max-vertical-offset="2295">
+          <caret line="67" column="69" selection-start-line="67" selection-start-column="69" selection-end-line="67" selection-end-column="69" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.42700157" vertical-offset="1326" max-vertical-offset="1972">
+          <caret line="94" column="14" selection-start-line="94" selection-start-column="14" selection-end-line="94" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
