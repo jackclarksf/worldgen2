@@ -21,7 +21,8 @@ class World:
         total_squares = self.x * self.x
         water_level = random.randint(0, 10)
         print("World born with size: {} comprising of {} squares and a water level of {}".format(self.x, total_squares, water_level))
-        self.water_list = self.actual_water_world(water_level)
+        self.water_list = self.refined_water_world()
+        #self.water_list = self.actual_water_world(water_level)
         self.land_generator()
         self.city_generator()
         self.scout_generator()
@@ -41,16 +42,50 @@ class World:
 
     def actual_water_world(self, w_level):
         water_list = []
-        remaining_list = [x for x in self.world_coordinates() if x not in water_list]
-        water_list = self.island_function(remaining_list) + water_list
-        sug_frequency = round(self.x)/3
-        self.space_creator_length((round(self.x/3))*2, round(self.y/2), sug_frequency, water_list)
         for i in self.world_coordinates():
             if (i[0] == 0) or (i[0] == self.x-1):
                 water_list.append(i)
             elif (i[1] == 0) or (i[1] == self.x-1):
                 water_list.append(i)
+        remaining_list = [x for x in self.world_coordinates() if x not in water_list]
+        water_list = self.island_function(remaining_list) + water_list
+        land_list = [x for x in self.world_coordinates() if x not in water_list]
+        sug_frequency = round(self.x)/3
+        self.space_creator_length((round(self.x/3))*2, round(self.y/2), sug_frequency, water_list)
+        smoothed_land_list = self.neighbour_smoother(water_list, land_list, 2)
+        water_list = [x for x in water_list if x not in smoothed_land_list]
         return water_list
+
+    #OK, SO WE HAVE SOLVED THE ISOLATION PROBLEM, NOW WE NEED TO SOLVE THE BIG WASTELAND PROBLEM
+    #SOLUTION MIGHT BE > ALL WATER, THEN RANDOMLY SCATTER, THEN PUNCH IN LAND
+
+    def refined_water_world(self):
+        water_list = [x for x in self.world_coordinates()]
+        count = 0
+        radius = round(self.x/5)
+        while count < 5:
+            our_coordinate = random.choice(water_list)
+            nearby = self.get_neighbours_specifiable(our_coordinate[0], our_coordinate[1], radius)
+            for i in nearby:
+                if i in water_list:
+                    print("Removing")
+                    water_list.remove(i)
+            radius -= 1
+            count += 1
+        return water_list
+    #THIS IS MORE PROMISING. NOW PERHAPS JUST ADD SOME STATIC AND MAKE SURE LINKED?
+
+
+
+
+    def neighbour_smoother(self, list_of_water, list_of_land, land_density_limit):
+        for i in list_of_land:
+            land_neighbours = self.neighbour_type_check_return(i[0], i[1], 1, list_of_land)
+            if len(land_neighbours) < land_density_limit:
+                print("problem at {}".format(i))
+                list_of_land.remove(i)
+                list_of_water.append(i)
+        return list_of_land
 
     def island_function(self, island_list):
         additional_island_list = []
@@ -208,7 +243,7 @@ class World:
         for i in self.roads:
             our_route = i.get_route()
             duplicate_list = [item for item, count in collections.Counter(our_route).items() if count > 1]
-            print("route testing {}".format(duplicate_list))
+            #print("route testing {}".format(duplicate_list))
             if len(duplicate_list) > 0:
                 for i in duplicate_list:
                     our_route.remove(i)
@@ -242,7 +277,7 @@ class World:
             our_hits = i.hit_rate()
             i.age += 1
             our_age = i.age
-            print("Our hits = {} and age: {}".format(our_hits, our_age))
+            #print("Our hits = {} and age: {}".format(our_hits, our_age))
             scout_origa, scout_origb = i.return_origin()
             scout_orig = i.return_origin()
             pos_moves = self.neighbour_move_options(a, b, 1)
@@ -265,7 +300,7 @@ class World:
 
             elif len(pos_moves) > 0:
                 if our_hits > 10:
-                    print("Launching meta scan")
+                    #print("Launching meta scan")
                     if len(self.neighbour_type_check_return(a, b, 3, other_cities)) > 0:
                         locations = self.neighbour_type_check_return(a, b, 3, other_cities)
                         chosen_location = random.choice(locations)

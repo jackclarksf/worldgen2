@@ -22,9 +22,14 @@ class Image_Maker:
         size = (len(input_list[0])*10, len(input_list[0]*10))
         im = Image.new("RGB", size)
         draw = ImageDraw.Draw(im)
-        position = (0, 0)
-        position2 = (10, 10)
         count = 0
+
+        def position_fiddler(pos):
+            pos = list(pos)
+            pos[0] += 10
+            pos = tuple(pos)
+            return pos
+
         for i in input_list:
             print(i, input_list.index(i))
             print(count)
@@ -34,54 +39,31 @@ class Image_Maker:
             for j in i:
                 if j == "W":
                     draw.rectangle((position, position2), fill="blue")
-                    position = list(position)
-                    position[0] += 10
-                    position = tuple(position)
-                    position2 = list(position2)
-                    position2[0] += 10
-                    position2 = tuple(position2)
+                    position = position_fiddler(position)
+                    position2 = position_fiddler(position2)
                 elif j == "S":
                     draw.rectangle((position, position2), fill="red")
-                    position = list(position)
-                    position[0] += 10
-                    position = tuple(position)
-                    position2 = list(position2)
-                    position2[0] += 10
-                    position2 = tuple(position2)
+                    position = position_fiddler(position)
+                    position2 = position_fiddler(position2)
                 elif j == "C":
                     draw.rectangle((position, position2), fill="green")
-                    position = list(position)
-                    position[0] += 10
-                    position = tuple(position)
-                    position2 = list(position2)
-                    position2[0] += 10
-                    position2 = tuple(position2)
+                    position = position_fiddler(position)
+                    position2 = position_fiddler(position2)
                 elif j == "R":
                     draw.rectangle((position, position2), fill="purple")
-                    position = list(position)
-                    position[0] += 10
-                    position = tuple(position)
-                    position2 = list(position2)
-                    position2[0] += 10
-                    position2 = tuple(position2)
+                    position = position_fiddler(position)
+                    position2 = position_fiddler(position2)
                 elif j == "X":
                     draw.rectangle((position, position2), fill="orange")
-                    position = list(position)
-                    position[0] += 10
-                    position = tuple(position)
-                    position2 = list(position2)
-                    position2[0] += 10
-                    position2 = tuple(position2)
+                    position = position_fiddler(position)
+                    position2 = position_fiddler(position2)
                 else:
                     draw.rectangle((position, position2), fill="yellow")
-                    position = list(position)
-                    position[0] += 10
-                    position = tuple(position)
-                    position2 = list(position2)
-                    position2[0] += 10
-                    position2 = tuple(position2)
+                    position = position_fiddler(position)
+                    position2 = position_fiddler(position2)
             count += 1
-        im.save("C:/Users/iamja_000/Documents/GitHub/worldgen2/lemons_experiment_" + str(pic_name) + ".jpg")
+        im.save("C:/Users/iamja_000/Documents/GitHub/worldgen2/images/lemons_experiment_" + str(pic_name) + ".jpg")
+
 
 #image_list_iterator(visual_map, 20)
 
