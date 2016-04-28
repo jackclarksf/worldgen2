@@ -91,7 +91,7 @@ class Game:
 game_world = Game()
 
 #while True:
-while game_world.tick < 20:
+while game_world.tick < 1:
     print(" ")
     game_world.state_checker()
     game_world.energy_fluctuations()
