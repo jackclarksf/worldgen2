@@ -61,21 +61,38 @@ class World:
 
     def refined_water_world(self):
         water_list = [x for x in self.world_coordinates()]
+        temp_list = []
         count = 0
-        radius = round(self.x/5)
+        radius = round(self.x/4)
+        radius_list = list(range(2, radius))
+        print("Radius list: {}".format(radius_list))
         while count < 5:
+            radius_option = random.choice(radius_list)
             our_coordinate = random.choice(water_list)
-            nearby = self.get_neighbours_specifiable(our_coordinate[0], our_coordinate[1], radius)
+            water_list.remove(our_coordinate)
+            temp_list.append(our_coordinate)
+            nearby = self.get_neighbours_specifiable(our_coordinate[0], our_coordinate[1], radius_option)
             for i in nearby:
                 if i in water_list:
-                    print("Removing")
                     water_list.remove(i)
             radius -= 1
             count += 1
+        water_list.extend(temp_list)
+
+        death_range = list(range(1, 100))
+        for i in water_list:
+            death_chance = random.choice(death_range)
+            if death_chance < 11:
+                water_list.remove(i)
+
+        """Adds a water border"""
+        for i in self.world_coordinates():
+            if (i[0] == 0) or (i[0] == self.x-1):
+                water_list.append(i)
+            elif (i[1] == 0) or (i[1] == self.x-1):
+                water_list.append(i)
         return water_list
     #THIS IS MORE PROMISING. NOW PERHAPS JUST ADD SOME STATIC AND MAKE SURE LINKED?
-
-
 
 
     def neighbour_smoother(self, list_of_water, list_of_land, land_density_limit):
