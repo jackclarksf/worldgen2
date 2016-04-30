@@ -22,6 +22,7 @@ class World:
         water_level = random.randint(0, 10)
         print("World born with size: {} comprising of {} squares and a water level of {}".format(self.x, total_squares, water_level))
         self.water_list = self.refined_water_world()
+        self.water_list.extend(self.fuzzing_and_static())
         #self.water_list = self.actual_water_world(water_level)
         self.land_generator()
         self.city_generator()
@@ -66,9 +67,11 @@ class World:
         radius = round(self.x/4)
         if radius < 3:
             radius = 3
+        if radius > 10:
+            radius = round(self.x/8)
         radius_list = list(range(2, radius))
         print("Radius list: {}".format(radius_list))
-        while count < 5:
+        while count < round(self.x/4):
             radius_option = random.choice(radius_list)
             our_coordinate = random.choice(water_list)
             water_list.remove(our_coordinate)
@@ -95,6 +98,31 @@ class World:
                 water_list.append(i)
         return water_list
     #THIS IS MORE PROMISING. NOW PERHAPS JUST ADD SOME STATIC AND MAKE SURE LINKED?
+
+    def fuzzing_and_static(self):
+        our_candidates = [x for x in self.world_coordinates() if x not in self.water_return()]
+        additional_water = []
+        chance_numbers = list(range(1, 10))
+        for i in our_candidates:
+            print(i[0], i[1])
+            b = (i[0]-1, i[1])
+            c = (i[0]+1, i[1])
+            d = (i[0], i[1]+1)
+            e = (i[0], i[1]-1)
+            candidate_evaluator_list = [b, c, d, e]
+            occurences = 0
+            for j in candidate_evaluator_list:
+                if j in self.water_return():
+                    occurences += 1
+            print("{} occurences".format(occurences))
+            if occurences > 3:
+                print("Too many occurences, tweaking")
+                our_candidates.remove(i)
+                additional_water.append(i)
+        print("Water list now {}".format(additional_water))
+        print("Land list now {}".format(our_candidates))
+        return additional_water
+
 
 
     def neighbour_smoother(self, list_of_water, list_of_land, land_density_limit):

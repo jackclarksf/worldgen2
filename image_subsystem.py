@@ -31,8 +31,8 @@ class Image_Maker:
             return pos
 
         for i in input_list:
-            print(i, input_list.index(i))
-            print(count)
+            #print(i, input_list.index(i))
+            #print(count)
             our_index = input_list.index(i)
             position = (0, count*10)
             position2 = (10, (count*10) + 10)
