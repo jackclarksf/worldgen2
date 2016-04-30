@@ -1,6 +1,6 @@
 from worlds import World
 from entities import City
-from temp_scrap import Image_Maker
+from image_subsystem import Image_Maker
 
 land1 = "W"
 land2 = "'"
@@ -91,7 +91,7 @@ class Game:
 game_world = Game()
 
 #while True:
-while game_world.tick < 1:
+while game_world.tick < 20:
     print(" ")
     game_world.state_checker()
     game_world.energy_fluctuations()
@@ -100,7 +100,7 @@ while game_world.tick < 1:
     game_world.move_cycle()
     game_world.world.telemetry_output(game_world.tick, game_world.bmap)
     #game_world.world.coordinate_telemetry(game_world.tick)
-    #game_world.image_printer()
+    game_world.image_printer()
     game_world.auto_tick()
     #game_world.tick_forward()
 

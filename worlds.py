@@ -4,7 +4,7 @@ from itertools import product, starmap
 import collections
 import random
 from entities import City, Scout, Road, MetaRoad, Vegetation
-from temp_scrap import Image_Maker
+from image_subsystem import Image_Maker
 
 #OBJECTIVES:
 #write a city function that scans for neighbours and converts to same origin if connected
@@ -64,6 +64,8 @@ class World:
         temp_list = []
         count = 0
         radius = round(self.x/4)
+        if radius < 3:
+            radius = 3
         radius_list = list(range(2, radius))
         print("Radius list: {}".format(radius_list))
         while count < 5:
