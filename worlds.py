@@ -28,7 +28,7 @@ class World:
         self.city_generator()
         self.scout_generator()
         self.tile_pop_dict = self.main_dictionary()
-        print(self.tile_pop_dict)
+        #print(self.tile_pop_dict)
 
     def world_coordinates(self):
         w_coord = list(product(range(self.x), range(self.y)))
@@ -102,9 +102,8 @@ class World:
     def fuzzing_and_static(self):
         our_candidates = [x for x in self.world_coordinates() if x not in self.water_return()]
         additional_water = []
-        chance_numbers = list(range(1, 10))
+        chance_numbers = list(range(1, 100))
         for i in our_candidates:
-            print(i[0], i[1])
             b = (i[0]-1, i[1])
             c = (i[0]+1, i[1])
             d = (i[0], i[1]+1)
@@ -114,11 +113,24 @@ class World:
             for j in candidate_evaluator_list:
                 if j in self.water_return():
                     occurences += 1
-            print("{} occurences".format(occurences))
             if occurences > 3:
-                print("Too many occurences, tweaking")
                 our_candidates.remove(i)
                 additional_water.append(i)
+            elif occurences > 2:
+                chance = random.choice(chance_numbers)
+                if chance > 50:
+                    our_candidates.remove(i)
+                    additional_water.append(i)
+            elif occurences > 1:
+                chance = random.choice(chance_numbers)
+                if chance > 30:
+                    our_candidates.remove(i)
+                    additional_water.append(i)
+            elif occurences > 0:
+                chance = random.choice(chance_numbers)
+                if chance > 30:
+                    our_candidates.remove(i)
+                    additional_water.append(i)
         print("Water list now {}".format(additional_water))
         print("Land list now {}".format(our_candidates))
         return additional_water
@@ -240,7 +252,7 @@ class World:
 
             self.cities.append(City(city_coord[0], city_coord[1], city_coord[0], city_coord[1]))
             city_quantity += 1
-        print("Our cities: {}".format(self.return_locations_for_object_group(self.cities)))
+        #print("Our cities: {}".format(self.return_locations_for_object_group(self.cities)))
 
     def city_growth(self):
         for i in self.cities:
